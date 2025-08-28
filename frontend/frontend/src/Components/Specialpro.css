@@ -1,0 +1,155 @@
+
+
+/* Container */
+.special-container {
+  text-align: center;
+  padding: 20px;
+  background: #E7F3F5;
+  font-family: Arial, sans-serif;
+  margin-top: 13rem;
+  margin-bottom: 4rem;
+}
+
+.special-container h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Card Layout */
+.specialcard-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Card */
+.specialcard {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  width: 290px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.specialcard select{
+    width: 280px;
+    height: 40px;
+    border: none;
+    /* border: 1px solid black; */
+}
+
+
+.specialcard:hover {
+  transform: translateY(-5px);
+}
+
+.specialcard img {
+  width: 100%;
+  height: 250px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Product Name */
+.specialcard h3 {
+  margin: 8px 0;
+  font-size: 1.2rem;
+  color: #444;
+  text-align: left;
+  margin-left: 0.6rem;
+}
+
+/* Price Text */
+.price {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+    color: #444;
+      text-align: left;
+        margin-left: 0.6rem;
+
+
+
+}
+
+/* Weight Selector */
+.specialcard select {
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid #D49A38;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  
+}
+
+/* Quantity Counter */
+.qty-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  /* margin: 10px 0; */
+  border: 1px solid #D49A38;
+  height: 100%;
+  margin-left: 0.5rem;
+  border-radius: 0.4rem;
+  
+}
+
+.qty-counter button {
+  padding: 5px 10px;
+  border: none;
+  background: none;
+  font-size: 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+  height: 40px;
+}
+
+.qty-counter button:hover {
+  background: #bbb;
+}
+
+.qty-counter span {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* Total Price */
+.total-price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Add to Cart Button */
+.add-cart-btn {
+  background: #D49A38;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 180px;
+      border: 1px solid black;
+      font-size: 1.2rem;
+
+}
+
+.add-cart-btn:hover {
+  background: #e64a19;
+}
+
+.btn-container{
+    display: flex;
+    width: 100%;
+    /* justify-content: space-between; */
+    gap: 0.6rem;
+}
