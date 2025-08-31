@@ -18,8 +18,8 @@ try {
     if (!Name || !file) return res.status(400).json({ message: "Name and image required" });
 
     const banner = new bannerModel({
-      Name,
-      image: file.path,
+      Name: Name,
+      image: file.path
     });
 
     await banner.save();

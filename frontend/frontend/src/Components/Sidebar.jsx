@@ -13,10 +13,10 @@ export default function Sidebar({ onCategorySelect, defaultCategory = "all" }) {
     { name: "All Products", key: "all", image: null },
     { name: "Dry Fruits", key: "dryfruits", image: img },
     { name: "Snacks", key: "snacks", image: img },
-    { name: "Desi biscuits", key: "biscuits", image: img },
-    { name: "Dry Fruits Sweets", key: "drysweets", image: img },
-    { name: "Sugarless Sweets", key: "sugarless", image: img },
-    { name: "Festival Sweets", key: "festivalsweets", image: img },
+    { name: "Desi biscuits", key: "Desibiscuits", image: img },
+    { name: "Dry Fruits Sweets", key: "DryFruitsSweets", image: img },
+    { name: "Sugarless Sweets", key: "SugarlessSweets", image: img },
+    { name: "Festival Sweets", key: "FestivalSweets", image: img },
     { name: "Gifting", key: "gifting", image: img }
   ];
 

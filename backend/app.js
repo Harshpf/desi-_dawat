@@ -11,12 +11,12 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-const corsOption = {
-    origin: 'http://localhost:5173',
-    methods: ["GET", "POST", "DELETE","PUT"],
-    credentials: true 
+const corsOptions = {
+  origin: ["http://localhost:5173", "http://localhost:3001"],
+  methods: ["GET", "POST", "DELETE", "PUT"],
+  credentials: true
 };
-app.use(cors(corsOption));
+app.use(cors(corsOptions));
 
 // database connection
 const {mongoDB}= require("./config/mongodb");
