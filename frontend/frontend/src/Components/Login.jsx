@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import './Login.css'
 import loginimg from '../assets/login.jpg'
 import { Loginuser } from './Allapi'
+import { useNavigate } from "react-router-dom"; // ⬅ for navigation
+
 
 
 
@@ -10,9 +12,15 @@ export const Login = () => {
 
   const[form ,setForm] = useState({email:"", password:""});
   const [msg,setMsg]= useState("");
+  const navigate = useNavigate();
+  
 
   const handlechange =(e)=>{
     setForm({  ...form , [e.target.name]: e.target.value});
+  }
+
+  const handleclick =() =>{
+    navigate('/signup')
   }
 
   const handleSubmit= async(e) => {
@@ -22,7 +30,11 @@ export const Login = () => {
          const res = await Loginuser( form.email,form.password);
              console.log("Login API Response:", res);   // 👈 check here
 
+                  localStorage.setItem("isLoggedIn", "true");
+
+
          setMsg(res.data.msg||"login sucessful");
+            navigate('/');
          }
          catch(err){
           console.log("error from login");
@@ -48,10 +60,10 @@ export const Login = () => {
             <form action="login-page" className="login-page"  onSubmit={handleSubmit}>
               <input name="email"  placeholder='Email' onChange={handlechange}/>
               <input  name = "password" type="password"  placeholder='password'  onChange={handlechange}/>
-              <label htmlFor="forgetpassword">forgetpassword?</label>
-              {/* <a href=""className='btn-signup' onClick={handleclick}>Signup</a> */}
+              {/* <label htmlFor="forgetpassword">forgetpassword?</label> */}
+              <a href=""className='btn-signup' onClick={handleclick}>Signup</a>
 
-              <button>Login</button>
+              <button  >Login</button>
               <p>{msg}</p>
                
             </form>

@@ -1,0 +1,82 @@
+/* BannerList.css */
+
+.banner-list {
+  margin-left: 240px; /* push right of sidebar */
+  padding: 30px;
+  background: #ecf0f1;
+  min-height: 100vh;
+}
+
+.banner-list h3 {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.banner-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.banner-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  background: #fff;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.banner-list li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 5px 14px rgba(0, 0, 0, 0.12);
+}
+
+.banner-info {
+  flex: 1;
+}
+
+.banner-info strong {
+  font-size: 1.2rem;
+  color: #34495e;
+}
+
+.banner-info small {
+  display: block;
+  font-size: 0.8rem;
+  color: #7f8c8d;
+  margin-top: 4px;
+}
+
+.banner-list img {
+  width: 120px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.banner-list button {
+  padding: 8px 14px;
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.banner-list button:hover {
+  background: #c0392b;
+}
+
+.banner-list button:disabled {
+  background: #bbb;
+  cursor: not-allowed;
+}

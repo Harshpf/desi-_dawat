@@ -1,0 +1,83 @@
+.product-form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  max-width: 500px;
+  margin-left: 260px; /* keeps space for sidebar */
+}
+
+.form-title {
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.product-form input,
+.product-form select,
+.product-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.product-form input:focus,
+.product-form select:focus,
+.product-form textarea:focus {
+  border-color: #3498db;
+}
+
+.product-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.file-label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #555;
+  cursor: pointer;
+}
+
+.file-label input {
+  display: block;
+  margin-top: 6px;
+}
+
+.preview-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.preview-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
+
+.submit-btn {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.submit-btn:hover {
+  background: #2980b9;
+}

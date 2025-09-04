@@ -37,6 +37,7 @@
 
 import React from "react";
 import axios from "axios";
+import './ProductList.css'
 
 function ProductList({ products = [], fetchProducts }) {
   // normalize (support both array or { products: [...] } shape)
@@ -80,33 +81,52 @@ function ProductList({ products = [], fetchProducts }) {
   }
 
   return (
-    <div>
-      <h3>Product List</h3>
-      <ul style={{ listStyle: "none", padding: 0 }}>
+    <div className="product-list-container">
+      <h3 className="list-title">📦 Product List</h3>
+      <ul className="product-list">
         {productArray.map((p) => {
           const images = Array.isArray(p.image) ? p.image : [];
           return (
-            <li key={p._id} style={{ display: "flex", gap: 12, padding: 12, borderBottom: "1px solid #eee" }}>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 600 }}>{p.Name}</div>
-                <div>Price: ₹{p.Price}</div>
-                <div>Category: {p.Category}</div>
-                <div style={{ fontSize: 13, color: "#444" }}>{p.Description}</div>
-
-                <div style={{ display: "flex", gap: 8, marginTop: 8, flexWrap: "wrap" }}>
-                  {images.map((imgPath, i) => {
-                    const fixed = imgPath.replace(/\\/g, "/");
-                    const url = encodeURI(`http://localhost:5000/${fixed}`);
-                    return (
-                      <img key={i} src={url} alt={`${p.Name}-${i}`} style={{ width: 90, height: 90, objectFit: "cover", borderRadius: 6 }} />
-                    );
-                  })}
+            <li key={p._id} className="product-item">
+              <div className="product-info">
+                <div className="product-name">{p.Name}</div>
+                <div className="product-price">Price: ₹{p.Price}</div>
+                <div className="product-category">
+                  Category: {p.Category}
                 </div>
+                <div className="product-desc">{p.Description}</div>
+
+                {images.length > 0 && (
+                  <div className="product-images">
+                    {images.map((imgPath, i) => {
+                      const fixed = imgPath.replace(/\\/g, "/");
+                      const url = encodeURI(
+                        `http://localhost:5000/${fixed}`
+                      );
+                      return (
+                        <img
+                          key={i}
+                          src={url}
+                          alt={`${p.Name}-${i}`}
+                          className="product-img"
+                        />
+                      );
+                    })}
+                  </div>
+                )}
               </div>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                <button onClick={() => updateProduct(p)}>Update</button>
-                <button onClick={() => deleteProduct(p._id)} style={{ background: "#e74c3c", color: "#fff" }}>
+              <div className="action-buttons">
+                <button
+                  className="update-btn"
+                  onClick={() => updateProduct(p)}
+                >
+                  Update
+                </button>
+                <button
+                  className="delete-btn"
+                  onClick={() => deleteProduct(p._id)}
+                >
                   Delete
                 </button>
               </div>

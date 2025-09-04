@@ -98,6 +98,8 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import "./ProductForm.css"; 
+
 
 function ProductForm({ fetchProducts }) {
   const [name, setName] = useState("");
@@ -157,26 +159,27 @@ function ProductForm({ fetchProducts }) {
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit} style={{ marginBottom: 20 }}>
+   return (
+    <form onSubmit={handleSubmit} className="product-form">
+      <h3 className="form-title">➕ Add Product</h3>
+
       <input
         type="text"
         value={name}
         placeholder="Enter product name"
         onChange={(e) => setName(e.target.value)}
         required
-        style={{ display: "block", marginBottom: 8 }}
       />
+
       <input
         type="number"
         value={price}
         placeholder="Enter product price"
         onChange={(e) => setPrice(e.target.value)}
         required
-        style={{ display: "block", marginBottom: 8 }}
       />
 
-      <select value={category} onChange={(e) => setCategory(e.target.value)} required style={{ display: "block", marginBottom: 8 }}>
+      <select value={category} onChange={(e) => setCategory(e.target.value)} required>
         <option value="">Select Category</option>
         <option value="dryfruits">Dry Fruits</option>
         <option value="snacks">Snacks</option>
@@ -193,30 +196,33 @@ function ProductForm({ fetchProducts }) {
         placeholder="Enter product description"
         onChange={(e) => setDescription(e.target.value)}
         required
-        style={{ display: "block", marginBottom: 8 }}
       />
 
-      <label style={{ display: "block", marginBottom: 8 }}>
-        Images (select multiple)
+      <label className="file-label">
+        Upload Images
         <input
           ref={fileInputRef}
           type="file"
           accept="image/*"
           multiple
           onChange={handleFileChange}
-          style={{ display: "block", marginTop: 6 }}
         />
       </label>
 
       {previews.length > 0 && (
-        <div style={{ display: "flex", gap: 8, marginBottom: 8, flexWrap: "wrap" }}>
+        <div className="preview-container">
           {previews.map((src, idx) => (
-            <img key={idx} src={src} alt={`preview-${idx}`} style={{ width: 90, height: 90, objectFit: "cover", borderRadius: 6 }} />
+            <img
+              key={idx}
+              src={src}
+              alt={`preview-${idx}`}
+              className="preview-img"
+            />
           ))}
         </div>
       )}
 
-      <button type="submit">Add Product</button>
+      <button type="submit" className="submit-btn">Add Product</button>
     </form>
   );
 }

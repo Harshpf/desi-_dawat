@@ -33,6 +33,8 @@
 // export default BannerForm;
 import React, { useState } from "react";
 import axios from "axios";
+import "./BannerForm.css";
+
 
 function BannerForm({ fetchBanners }) {
   const [name, setName] = useState("");
@@ -67,25 +69,26 @@ function BannerForm({ fetchBanners }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
-      <input
-        type="text"
-        value={name}
-        placeholder="Enter banner name"
-        onChange={(e) => setName(e.target.value)}
-        required
-      />
+        <div className="banner-form">
+      <h2>Add New Banner</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={name}
+          placeholder="Enter banner name"
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
 
-   
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImage(e.target.files[0])}
+        />
 
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => setImage(e.target.files[0])}
-      />
-
-      <button type="submit">Add Banner</button>
-    </form>
+        <button type="submit">Add Banner</button>
+      </form>
+    </div>
   );
 }
 

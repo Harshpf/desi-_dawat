@@ -2,8 +2,14 @@
 
 import API from './api';
 
+export const signupUser = (name, email, password) =>
+  API.post("/auth/signup", {   name, email,  password }); 
+
 export const Loginuser = (email,password) =>
-API.post("/auth/login",{ Email: email ,Password: password});
+API.post("/auth/login",{  email , password},{ withCredentials: true });
+
+// export const Logout = (email,password) =>
+// API.post("/auth/logout",{  email , password},{ withCredentials: true });  //need to change logout api
 
 
 export const getProductByCategory = (category) =>
