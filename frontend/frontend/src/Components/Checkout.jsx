@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Checkout.css";
+import { useNavigate } from "react-router-dom";  
+
 
 // Single-page Checkout: Review (top) + Address form (left) + Saved Addresses (right)
 export default function Checkout() {
   const [cart, setCart] = useState([]);
+  const navigate = useNavigate();
   const [addresses, setAddresses] = useState(
     JSON.parse(localStorage.getItem("addresses")) || []
   );
@@ -100,6 +103,8 @@ export default function Checkout() {
     // setCart([]);
 
     // NOTE: per your request we DO NOT show any "Order Confirmed" UI here
+       navigate("/confirm", { state: { order } });
+
   };
 
   const handleDeleteAddress = (idx) => {

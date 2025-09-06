@@ -97,6 +97,7 @@ export const Header = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedSection, setSelectedSection] = useState(null);
 
+
   const navigate = useNavigate();
 
   // 🔹 Hide / Show header on scroll
@@ -120,6 +121,10 @@ export const Header = () => {
       setSelectedSection(null); // reset section
     }
   };
+
+  const handleClick=() =>{
+    navigate('/orderlist')
+  }
 
   // 🔹 Logout using backend API
 //   // const handleLogout = async () => {
@@ -178,7 +183,8 @@ export const Header = () => {
           {!selectedSection ? (
             <>
               <button onClick={() => setSelectedSection("profile")}>Profile</button>
-              <button onClick={() => setSelectedSection("orders")}>Orders</button>
+              <button onClick={handleClick}>My Order</button>
+              {/* <button onClick={() => setSelectedSection("orders")}>Orders</button> */}
               <button onClick={() => setSelectedSection("settings")}>Settings</button>
                      {/* <button onClick={handleLogout}>Logout</button> */}
 
