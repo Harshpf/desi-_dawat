@@ -34,6 +34,8 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+import "./BannerList.css";
+
 
 function BannerList({ banners = [], fetchBanners }) {
   const [deletingId, setDeletingId] = useState(null);
@@ -68,51 +70,26 @@ function BannerList({ banners = [], fetchBanners }) {
     }
   };
 
-  return (
-    <div>
+   return (
+    <div className="banner-list">
       <h3>Banner List</h3>
-      <ul style={{ listStyle: "none", padding: 0 }}>
+      <ul>
         {banners.map((b) => {
-          // normalize path (Windows -> URL friendly) and encode it
           const imgPath = b?.image ? b.image.replace(/\\/g, "/") : null;
           const imgUrl = imgPath ? encodeURI(`http://localhost:5000/${imgPath}`) : null;
 
           return (
-            <li
-              key={b._id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                padding: "8px 0",
-                borderBottom: "1px solid #eee",
-              }}
-            >
-              <div style={{ flex: 1 }}>
+            <li key={b._id}>
+              <div className="banner-info">
                 <strong>{b?.Name || "Untitled"}</strong>
-                {b?._id && <div style={{ fontSize: 12, color: "#666" }}>ID: {b._id}</div>}
+                {b?._id && <small>ID: {b._id}</small>}
               </div>
 
-              {imgUrl && (
-                <img
-                  src={imgUrl}
-                  alt={b?.Name || "banner image"}
-                  style={{ width: 120, height: "auto", objectFit: "cover", borderRadius: 6 }}
-                />
-              )}
+              {imgUrl && <img src={imgUrl} alt={b?.Name || "banner"} />}
 
               <button
                 onClick={() => deleteBanner(b._id)}
                 disabled={deletingId === b._id}
-                style={{
-                  padding: "6px 10px",
-                  background: deletingId === b._id ? "#ddd" : "#e74c3c",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: 6,
-                  cursor: deletingId === b._id ? "not-allowed" : "pointer",
-                }}
-                aria-disabled={deletingId === b._id}
               >
                 {deletingId === b._id ? "Deleting..." : "Delete"}
               </button>

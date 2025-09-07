@@ -9,8 +9,11 @@ import { Header } from './Components/Header'
 import ScrollToTop from './Components/ScrollToTop';
 import { Specialpro } from './Components/Specialpro';
 import { Login } from './Components/Login';
+import Signup from './Components/Signup';
 import Cart from './Components/Cart';
 import Checkout from './Components/Checkout';
+import ConfirmOrder from './Components/ConfirmOrder';
+import OrderList from './Components/OrderList';
 
 
 
@@ -29,8 +32,11 @@ function App() {
         <Route path = "/allproduct" element= {<Allproduct/>}/>
         <Route path = "/special" element= {<Specialpro/>}/>
         <Route path = "/login" element= {<Login/>}/>
+        <Route path = "/signup" element= {<Signup/>}/>
         <Route path = "/cart" element= {<Cart/>}/>
         <Route path="/checkout" element={<Checkout/>} />
+        <Route path="/confirm" element={<ConfirmOrder/>} />
+        <Route path="/orderlist" element={<OrderList/>} />
 
         
       </Routes>

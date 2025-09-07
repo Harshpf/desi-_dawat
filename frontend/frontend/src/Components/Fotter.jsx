@@ -5,6 +5,7 @@ import thankyou from '../assets/thankyou.png';
 import './Fotter.css'
 export const Fotter = () => {
   return (
+    <footer id="footer">
     <div>
          <div className="fotter-container">
         
@@ -60,5 +61,6 @@ export const Fotter = () => {
                   <p>2025@copyright desidawat..</p>
                 </div>
     </div>
+    </footer>
   )
 }

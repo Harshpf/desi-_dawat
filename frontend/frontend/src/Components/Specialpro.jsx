@@ -61,7 +61,7 @@ export const Specialpro = () => {
       image: product.img,
       weight,
       quantity: qty,
-      unitPrice,
+      unitPrice:product.price,
       total,
     };
 

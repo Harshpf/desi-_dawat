@@ -14,48 +14,57 @@ function sendTokenResponse(userid, res){
 }
 
 
+exports.signup = async (req, res) => {
+  try {
+    const { name, email, password } = req.body; // 👈 match frontend keys
 
-exports.signup = async (req,res) =>{
-
-    try{
-        const userdata = req.body;
-        
-        const userExist = await userModel.findOne({ Email: userdata.Email });
-        if(userExist){
-            res.status(400).json({msg:"already registered"})
-        }
-
-        const newUser = new userModel({
-            Name: userdata.Name,
-            Email: userdata.Email,
-            Password: userdata.Password,
-            Role: "user"
-        }) 
-        
-        await newUser.save();
-        res.status(200).json("succesfully add new user");
-    }catch(error){
-        res.status(500).json({msg:"error in singup",message:error.message});
-    }
-}
-
-
-exports.login = async(req,res) =>{
-    try{
-        const userdata = req.body;
-        const userExist  = await userModel.findOne({Email:userdata.Email});
-
-        if(!userExist){
-            res.status(201).json({msg:"Register first"});
-        }
-
-        const matchPassword = await bcrypt.compare(userdata.Password,userExist.Password);
-        if(!matchPassword){
-            res.status(400).json({msg:"the password is incorrect"})
-        }
-        
-        sendTokenResponse(userExist._id, res);
-    }catch(error){
-        res.status(500).json({msg:"error from login", message:error.message})
+    // Check if user already exists
+    const userExist = await userModel.findOne({ email }); // 👈 lowercase
+    if (userExist) {
+      return res.status(400).json({ msg: "already registered" });
     }
-}
+
+    // Hash password before saving
+    // const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new userModel({
+      name,
+      email,
+      password,
+      Role: "user"
+    });
+
+    await newUser.save();
+
+    return res.status(200).json({ msg: "Signup successful" });
+  } catch (error) {
+    return res.status(500).json({
+      msg: "error in signup",
+      message: error.message
+    });
+  }
+};
+
+
+
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body; // 👈 destructure cleanly
+
+    const userExist = await userModel.findOne({ email });
+    if (!userExist) {
+      return res.status(400).json({ msg: "Register first" });
+    }
+
+    // 👇 fix typo here
+    const matchPassword = await bcrypt.compare(password, userExist.password);
+    if (!matchPassword) {
+      return res.status(400).json({ msg: "the password is incorrect" });
+    }
+
+    return sendTokenResponse(userExist._id, res);
+  } catch (error) {
+    res.status(500).json({ msg: "error from login", message: error.message });
+  }
+};

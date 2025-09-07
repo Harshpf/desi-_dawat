@@ -1,0 +1,55 @@
+/* BannerForm.css */
+
+.banner-form {
+  margin-left: 240px; /* push right, since sidebar width is ~220px */
+  padding: 30px;
+  min-height: 60vh;
+  background: #ecf0f1; /* light gray background */
+}
+
+.banner-form h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.banner-form form {
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+}
+
+.banner-form input[type="text"],
+.banner-form input[type="file"] {
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.banner-form input[type="text"]:focus,
+.banner-form input[type="file"]:focus {
+  border-color: #3498db;
+}
+
+.banner-form button {
+  background: #3498db;
+  color: white;
+  font-size: 1rem;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.banner-form button:hover {
+  background: #2980b9;
+}
