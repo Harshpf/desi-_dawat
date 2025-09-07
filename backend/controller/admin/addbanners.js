@@ -12,14 +12,15 @@ exports.getAllBanners = async (req, res) => {
 
 exports.addBanner = [upload.single('images'), async (req, res) => {
 try {
-    const { Name } = req.body;
+    const { Name ,tag } = req.body;
     const file = req.file;
 
     if (!Name || !file) return res.status(400).json({ message: "Name and image required" });
 
     const banner = new bannerModel({
       Name: Name,
-      image: file.path
+      image: file.path,
+      tag:tag
     });
 
     await banner.save();
@@ -29,34 +30,6 @@ try {
     res.status(500).json({ message: "Error adding banner", error: err.message });
   }
 }];
-
-// exports.addBanner = [upload.single('images'), async (req, res) => {
-
-//      try {
-//     const { Name } = req.body;
-//     const file = req.file;
-
-//     if (!Name || !file) {
-//       return res.status(400).json({ message: "Name and image required" });
-//     }
-
-//     const newBanner = { Name, image: file.path };
-
-//     // ATOMIC: Push into the single document's banners array; create doc if not exists
-//     const updatedDoc = await bannerModel.findOneAndUpdate(
-//       {}, // match any existing single document
-//       {
-//         $push: { banners: newBanner },
-//         $setOnInsert: { createdAt: new Date() }, // set on first insert
-//       },
-//       { new: true, upsert: true } // return updated document; create if missing
-//     );
-
-//     return res.status(201).json(updatedDoc);
-//     } catch (err) {
-//         res.status(500).json({ msg: "err from adding banner", message: err.message });
-//     }
-// }]
 
 exports.deleteImage = async(req,res) =>{
     try{

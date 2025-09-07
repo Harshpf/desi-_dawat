@@ -29,7 +29,7 @@ exports.addProduct = [upload.array("image",5),async(req,res)=>{
             Category:data.Category,
             image :imagePaths,
             Description:data.Description,
-            key:data.Name
+            Tag:data.tag
         });
 
        await newProduct.save();
@@ -59,7 +59,7 @@ exports.updateProduct = [upload.array("image",5),async(req,res)=>{
         if (data.Price) product.Price = data.Price;
         if (data.Category) product.Category = data.Category;
         if (data.Description) product.Description = data.Description;
-
+        if(data.tag)product.Tag=data.tag
         if (req.files && req.files.length > 0) {
             const imagePaths = req.files.map(file => file.path);
             product.image = imagePaths;
