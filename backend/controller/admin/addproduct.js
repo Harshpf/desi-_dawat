@@ -29,7 +29,7 @@ exports.addProduct = [upload.array("image",5),async(req,res)=>{
             Category:data.Category,
             image :imagePaths,
             Description:data.Description,
-            Tag:data.tag
+            Tag:data.Tag
         });
 
        await newProduct.save();
@@ -39,38 +39,69 @@ exports.addProduct = [upload.array("image",5),async(req,res)=>{
     }
 }]
 
-
-
-exports.updateProduct = [upload.array("image",5),async(req,res)=>{
-
+exports.updateProduct = [
+  upload.array("image", 5),
+  async (req, res) => {
     try {
-        const data = req.body;
-        const productId = req.params.id;
+      const productId = req.params.id;
+      const data = req.body;
 
-        const product = await productModel.findById(productId);
-        if (!product) {
-            return res.status(404).json({ msg: "Product does not exist" });
-        }
+      if (req.files && req.files.length > 0) {
+        data.image = req.files.map(file => file.path);
+      }
 
-        if (data.Name){
-         product.Name = data.Name;
-        product.key = data.Name;
-        }
-        if (data.Price) product.Price = data.Price;
-        if (data.Category) product.Category = data.Category;
-        if (data.Description) product.Description = data.Description;
-        if(data.tag)product.Tag=data.tag
-        if (req.files && req.files.length > 0) {
-            const imagePaths = req.files.map(file => file.path);
-            product.image = imagePaths;
-        }
+      if (data.Name) {
+        data.key = data.Name; 
+      }
 
-        await product.save();
-       res.status(200).json({msg:"product is updated"});
-    }catch(err){
-        res.status(500).json({msg:"error updateing new product",message:err.message})
+      const updatedProduct = await productModel.findByIdAndUpdate(
+        productId,
+        { $set: data },
+        { new: true, runValidators: true }
+      );
+
+      if (!updatedProduct) {
+        return res.status(404).json({ msg: "Product does not exist" });
+      }
+
+      res.status(200).json({ msg: "Product updated successfully", product: updatedProduct });
+    } catch (err) {
+      res.status(500).json({ msg: "Error updating product", message: err.message });
     }
-}];
+  }
+];
+
+
+// exports.updateProduct = [upload.array("image",5),async(req,res)=>{
+
+//     try {
+//         const data = req.body;
+//         const productId = req.params.id;
+
+//         const product = await productModel.findById(productId);
+//         if (!product) {
+//             return res.status(404).json({ msg: "Product does not exist" });
+//         }
+
+//         if (data.Name){
+//          product.Name = data.Name;
+//         product.key = data.Name;
+//         }
+//         if (data.Price) product.Price = data.Price;
+//         if (data.Category) product.Category = data.Category;
+//         if (data.Description) product.Description = data.Description;
+//         if(data.tag)product.Tag=data.tag
+//         if (req.files && req.files.length > 0) {
+//             const imagePaths = req.files.map(file => file.path);
+//             product.image = imagePaths;
+//         }
+
+//         await product.save();
+//        res.status(200).json({msg:"product is updated"});
+//     }catch(err){
+//         res.status(500).json({msg:"error updateing new product",message:err.message})
+//     }
+// }];
 
 
 exports.deleteProduct =async(req,res)=>{

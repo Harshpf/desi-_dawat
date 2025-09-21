@@ -22,6 +22,7 @@ const productSchema = new mongoose.Schema({
     },
     Tag:{
         type:String,
+        set: (v) => v.toLowerCase().trim() 
     }
 }, { timestamps: true });
 
