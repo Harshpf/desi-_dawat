@@ -6,7 +6,11 @@ import { useNavigate } from "react-router-dom";
 // Single-page Checkout: Review (top) + Address form (left) + Saved Addresses (right)
 export default function Checkout() {
   const [cart, setCart] = useState([]);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
+
   const [addresses, setAddresses] = useState(
     JSON.parse(localStorage.getItem("addresses")) || []
   );
@@ -98,14 +102,25 @@ export default function Checkout() {
       shippingAddress,
     };
 
-    localStorage.setItem("lastOrder", JSON.stringify(order));
+      localStorage.setItem("lastOrder", JSON.stringify(order));
+    setShowConfirm(true); // 👉 open popup
+
     // localStorage.removeItem("cart");
     // setCart([]);
 
     // NOTE: per your request we DO NOT show any "Order Confirmed" UI here
-       navigate("/confirm", { state: { order } });
+      //  navigate("/confirm", { state: { order } });                                                                                                                                                                                                                             
 
   };
+
+    const handleYes = () => {
+    localStorage.removeItem("cart");
+    setCart([]);
+    setOrderPlaced(true);
+    setTimeout(() => setShowConfirm(false), 2000); // auto close after 2s
+  };
+
+  const handleNo = () => setShowConfirm(false);
 
   const handleDeleteAddress = (idx) => {
     if (!window.confirm("Delete this address?")) return;
@@ -219,13 +234,33 @@ export default function Checkout() {
       </div>
 
      {/* Place Order button shown at the bottom (centered, wide, green) */}
-<div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>
+<div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>                                                                                                                                                                                                  
   <button className="place-order-btn" onClick={handlePlaceOrder}>
     Place Order
   </button>
 </div>
+       
+
+        {showConfirm && (
+        <div className="modal-overlay">
+          <div className="modal-card">
+            {!orderPlaced ? (
+              <>
+                <h3>Confirm your order?</h3>
+                <button onClick={handleYes} className="btn-yes">Yes</button>
+                <button onClick={handleNo} className="btn-no">No</button>
+              </>
+            ) : (
+              <h3 className="success-message">🎉 Order placed successfully!</h3>
+            )}
+          </div>
+        </div>
+      )}
 
 
     </div>
+
+
+
   );
 }

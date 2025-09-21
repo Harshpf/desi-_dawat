@@ -12,7 +12,6 @@ import { Login } from './Components/Login';
 import Signup from './Components/Signup';
 import Cart from './Components/Cart';
 import Checkout from './Components/Checkout';
-import ConfirmOrder from './Components/ConfirmOrder';
 import OrderList from './Components/OrderList';
 
 
@@ -35,7 +34,6 @@ function App() {
         <Route path = "/signup" element= {<Signup/>}/>
         <Route path = "/cart" element= {<Cart/>}/>
         <Route path="/checkout" element={<Checkout/>} />
-        <Route path="/confirm" element={<ConfirmOrder/>} />
         <Route path="/orderlist" element={<OrderList/>} />
 
         

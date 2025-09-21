@@ -114,50 +114,15 @@
 
 
 
-/* 
-.popup-card {
-  position: absolute;
-  top: 120px;
-  right: 80px;
-  width: 120px;
-  
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 1000;
-  animation: fadeIn 0.2s ease-in-out;
-}
 
-.popup-card button {
-  background: none;
-  border: none;
-  padding: 8px 12px;
-  text-align: left;
-  cursor: pointer;
-  font-size: 14px;
-  border-radius: 6px;
-}
-
-.popup-card button:hover {
-  background-color: #f4f4f4;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-} */
 
 
 /* Popup card */
+/* Popup card */
 .popup-card {
-  position: absolute;
-  top: 120px;
-  right: 80px;
+  position: fixed;   /* ⬅️ instead of absolute */
+  top: 120px;        /* distance from top of viewport */
+  right: 80px;       /* distance from right of viewport */
   width: 180px;
   background: white;
   border: 1px solid #ddd;
@@ -170,6 +135,7 @@
   z-index: 1000;
   animation: fadeIn 0.2s ease-in-out;
 }
+
 
 .popup-card.expanded {
   width: 320px;   /* bigger for form */

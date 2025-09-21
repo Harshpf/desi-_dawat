@@ -61,6 +61,6 @@ export const Fotter = () => {
                   <p>2025@copyright desidawat..</p>
                 </div>
     </div>
-    </footer>
+    </footer>                                                                                                                                                                           
   )
 }

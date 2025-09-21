@@ -144,7 +144,7 @@
 import React, { useState, useEffect } from "react";
 import "./Cart.css";
 import { useNavigate } from "react-router-dom";
-import { getCart, deletecart } from "./Allapi";
+import { getCart, deletecart} from "./Allapi";
 
 export default function Cart() {
   const [cart, setCart] = useState([]);

@@ -28,9 +28,11 @@ export const Login = () => {
 
          try{
          const res = await Loginuser( form.email,form.password);
-             console.log("Login API Response:", res);   // 👈 check here
+             console.log("Login API Response:", res);  
 
                   localStorage.setItem("isLoggedIn", "true");
+
+            
 
 
          setMsg(res.data.msg||"login sucessful");
