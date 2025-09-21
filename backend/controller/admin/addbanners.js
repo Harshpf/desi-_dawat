@@ -15,8 +15,13 @@ try {
     const { Name ,tag } = req.body;
     const file = req.file;
 
+    const existBanner = await bannerModel.findOne({Name:Name});
+    if(existBanner){
+      return res.status(409).json("banner with this name already exist");
+    }
+    console.log(tag)
     if (!Name || !file) return res.status(400).json({ message: "Name and image required" });
-
+  
     const banner = new bannerModel({
       Name: Name,
       image: file.path,
@@ -24,7 +29,7 @@ try {
     });
 
     await banner.save();
-    res.status(201).json(banner);
+    res.status(201).json({msg:"new banner added succesfully",banner});
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Error adding banner", error: err.message });
