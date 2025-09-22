@@ -12,20 +12,20 @@ exports.getAllBanners = async (req, res) => {
 
 exports.addBanner = [upload.single('images'), async (req, res) => {
 try {
-    const { Name ,tag } = req.body;
+    const { Name ,Tag } = req.body;
     const file = req.file;
 
     const existBanner = await bannerModel.findOne({Name:Name});
     if(existBanner){
       return res.status(409).json("banner with this name already exist");
     }
-    console.log(tag)
+    console.log(Tag)
     if (!Name || !file) return res.status(400).json({ message: "Name and image required" });
   
     const banner = new bannerModel({
       Name: Name,
       image: file.path,
-      tag:tag
+      tag:Tag
     });
 
     await banner.save();
