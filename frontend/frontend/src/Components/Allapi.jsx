@@ -12,8 +12,11 @@ API.post("/auth/login",{  email , password},{ withCredentials: true });
 // API.post("/auth/logout",{  email , password},{ withCredentials: true });  //need to change logout api
 
 
-export const getProductByCategory = (category) =>
-  API.get(`/product/category/${category}`, { withCredentials: true });
+export const getbanner = () =>
+  API.get("/banners/getallbanner",{withCredentials:true});
+
+export const getProductByCategory = (category,tag) =>
+  API.get(`/product/category/${category}/${tag}`, { withCredentials: true });
 
 export const getallproduct = ()=>
 API.get("/product/getallproduct");
@@ -35,5 +38,5 @@ export const deletecart =(productId) =>
   API.delete(`/cart/deleteCartProduct/${productId}`)
 
 
-export const getspecialproduct = (category) =>
-  API.get(`/product/category/${category}`, { withCredentials: true });
+export const getspecialproduct = (category,tag) =>
+  API.get(`/product/category/${category}/${tag}`, { withCredentials: true });

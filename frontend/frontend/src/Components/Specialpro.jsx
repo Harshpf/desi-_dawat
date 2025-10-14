@@ -13,7 +13,7 @@ export const Specialpro = () => {
   useEffect(() => {
     const fetchSpecialProducts = async () => {
       try {
-        const res = await getspecialproduct("specialcategory"); // pass your category
+        const res = await getspecialproduct("specialcategory","null"); // pass your category
         const data = res.data.map((product) => ({
           id: product._id,
           name: product.Name,

@@ -3,7 +3,10 @@ import ProfileField from "./ProfileField";
 import PasswordField from "./PasswordField";
 import "./Profile.css";
 
+
+
 const Profile = () => {
+  
   const [user, setUser] = useState({
     name: "Your Name",
     email: "your@email.com",
@@ -12,6 +15,8 @@ const Profile = () => {
     phone: "",
     address: "",
   });
+
+  
 
   const handleFieldChange = (key, value) => {
     setUser({ ...user, [key]: value });

@@ -6,7 +6,7 @@ import  map from  '../assets/india.png'
 import  handmade from  '../assets/hand-made.png'
 import  delivery from  '../assets/free-delivery.png'
 import  preservatives from  '../assets/no-preservatives.png'
-import  poster from  '../assets/poster.jpg'
+// import  poster from  '../assets/poster.jpg'
 import card from '../assets/card.jpeg'
 import sweet from '../assets/sweet.jpeg'
 import snacks from '../assets/namkeen.jpeg'
@@ -16,25 +16,35 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import {  useNavigate } from 'react-router-dom'
-import axios from "axios"
-
+import {getbanner} from '../Components/Allapi'
 export const Landing = () => {
 
-  // const[poster , setPoster] = useState(null);
+  const[poster , setPoster] = useState(null);
 
 
-  // useEffect ( () =>{
-  //   const fetchPoster = async() =>{
-  //     try{
-  //       const res = await axios.get("https://jsonplaceholder.typicode.com/posts/1");
-  //       setPoster(res.data);
+  useEffect ( () =>{
+    const fetchPoster = async() =>{
+      try{
+        const res = await getbanner();
+        
+          if (res.data.banners && res.data.banners.length > 0) {
+        let imagePath = res.data.banners[0].image;
 
-  //     }catch(err){
-  //       console.log("error to fetch poster");
-  //     }
-  //   };
-  //   fetchPoster();
-  // },[]);
+        // Fix Windows backslashes
+        // imagePath = imagePath.replace(/\\/g, "/");
+
+        // Full URL (adjust if your backend is deployed)
+        const fullUrl = `http://localhost:5000/${imagePath}`;
+
+        setPoster(fullUrl);
+      }
+
+      }catch(err){
+        console.log("error to fetch poster");
+      }
+    };
+    fetchPoster();
+  },[]);
 
   
 const cards = [
@@ -93,13 +103,10 @@ img: snacks},
     autoplaySpeed: 3000,
     cssEase: "linear",
     responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
+     { breakpoint: 1024, settings: { slidesToShow: 2 } }, // tablets/landscape
+    { breakpoint: 768, settings: { slidesToShow: 1 } }, // phones
+  ],
+    
   };
   const setting = {
     // dots: true,
@@ -111,12 +118,9 @@ img: snacks},
     autoplaySpeed: 3000,
     cssEase: "linear",
     responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
+       { breakpoint: 1280, settings: { slidesToShow: 3 } },
+    { breakpoint: 1024, settings: { slidesToShow: 2 } },
+    { breakpoint: 768, settings: { slidesToShow: 1 } },
     ],
   };
 

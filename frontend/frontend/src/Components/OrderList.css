@@ -1,8 +1,10 @@
+/* ------------------- Order Summary Base ------------------- */
 .order-summary-container {
   margin-top: 13rem;
   max-width: 900px;
   padding: 20px;
-  /* margin: auto; */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .order-id {
@@ -72,3 +74,76 @@
   font-size: 20px;
   color: #333;
 }
+
+/* ------------------- Responsive ------------------- */
+
+/* Tablets ≤1024px */
+@media (max-width: 1024px) {
+  .order-card {
+    flex-direction: row;
+    gap: 15px;
+  }
+
+  .order-image {
+    width: 120px;
+    height: 100px;
+  }
+
+  .order-name {
+    font-size: 16px;
+  }
+
+  .order-price,
+  .order-total {
+    font-size: 15px;
+  }
+
+  .delivery-date {
+    font-size: 13px;
+  }
+}
+/* ------------------- Mobile ≤600px ------------------- */
+@media (max-width: 600px) {
+  .order-summary-container {
+    margin-top: 6rem;
+    padding: 10px;
+  }
+
+  .order-card {
+    flex-direction: row;        /* keep horizontal */
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .order-image {
+    width: 100px;               /* smaller image */
+    height: 100px;
+    margin-right: 10px;
+    flex-shrink: 0;             /* prevent image from shrinking */
+  }
+
+  .order-details {
+    flex: 1;                    /* take remaining width */
+  }
+
+  .order-name {
+    font-size: 16px;
+  }
+
+  .order-price,
+  .order-total {
+    font-size: 15px;
+  }
+
+  .delivery-date {
+    font-size: 13px;
+  }
+
+  .order-total {
+    text-align: right;          /* total on right */
+    margin-top: 10px;
+    font-size: 18px;
+  }
+}
+
+
