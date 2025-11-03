@@ -13,6 +13,7 @@ import Signup from './Components/Signup';
 import Cart from './Components/Cart';
 import Checkout from './Components/Checkout';
 import OrderList from './Components/OrderList';
+import Profile from './Components/Profile'
 
 
 
@@ -35,6 +36,7 @@ function App() {
         <Route path = "/cart" element= {<Cart/>}/>
         <Route path="/checkout" element={<Checkout/>} />
         <Route path="/orderlist" element={<OrderList/>} />
+        <Route path="/profile" element={<Profile/>} />
 
         
       </Routes>

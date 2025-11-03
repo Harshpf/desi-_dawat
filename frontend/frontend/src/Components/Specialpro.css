@@ -1,5 +1,3 @@
-
-
 /* Container */
 .special-container {
   text-align: center;
@@ -33,15 +31,10 @@
   width: 290px;
   text-align: center;
   transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-.specialcard select{
-    width: 280px;
-    height: 40px;
-    border: none;
-    /* border: 1px solid black; */
-}
-
 
 .specialcard:hover {
   transform: translateY(-5px);
@@ -60,6 +53,7 @@
   font-size: 1.2rem;
   color: #444;
   text-align: left;
+  width: 100%;
   margin-left: 0.6rem;
 }
 
@@ -68,22 +62,20 @@
   font-size: 1rem;
   font-weight: bold;
   margin-bottom: 8px;
-    color: #444;
-      text-align: left;
-        margin-left: 0.6rem;
-
-
-
+  color: #444;
+  text-align: left;
+  width: 100%;
+  margin-left: 0.6rem;
 }
 
 /* Weight Selector */
 .specialcard select {
+  width: 100%;
   padding: 5px;
   border-radius: 6px;
   border: 1px solid #D49A38;
   margin-bottom: 10px;
   font-size: 0.9rem;
-  
 }
 
 /* Quantity Counter */
@@ -92,12 +84,9 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  /* margin: 10px 0; */
   border: 1px solid #D49A38;
-  height: 100%;
-  margin-left: 0.5rem;
   border-radius: 0.4rem;
-  
+  padding: 5px;
 }
 
 .qty-counter button {
@@ -120,14 +109,6 @@
   font-weight: bold;
 }
 
-/* Total Price */
-.total-price {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 10px;
-}
-
 /* Add to Cart Button */
 .add-cart-btn {
   background: #D49A38;
@@ -138,18 +119,77 @@
   cursor: pointer;
   transition: background 0.3s ease;
   width: 180px;
-      border: 1px solid black;
-      font-size: 1.2rem;
-
+  font-size: 1.2rem;
+  border: 1px solid black;
 }
 
 .add-cart-btn:hover {
   background: #e64a19;
 }
 
-.btn-container{
-    display: flex;
+/* Button Container */
+.btn-container {
+  display: flex;
+  width: 100%;
+  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* -------------------- Responsive -------------------- */
+
+/* Tablet: 2 cards per row */
+@media (max-width: 1024px) {
+  .specialcard-container {
+    gap: 16px;
+  }
+
+  .specialcard {
+    width: 45%;
+    padding: 12px;
+  }
+
+  .specialcard img {
+    height: 200px;
+  }
+
+  .add-cart-btn {
     width: 100%;
-    /* justify-content: space-between; */
-    gap: 0.6rem;
+  }
+}
+
+/* Mobile: 1 card per row */
+@media (max-width: 600px) {
+  .specialcard-container {
+    gap: 12px;
+  }
+
+  .specialcard {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .specialcard img {
+    height: 150px;
+  }
+
+  .specialcard h3, .price {
+    font-size: 1rem;
+    margin-left: 0.4rem;
+  }
+
+  .qty-counter {
+    gap: 6px;
+  }
+
+  .add-cart-btn {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .btn-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
 }

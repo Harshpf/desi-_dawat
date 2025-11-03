@@ -1,120 +1,97 @@
+/* Fotter.css - styles for Fotter.jsx */
 
-/* fottter section */
+#footer { background-color: #2c3e50; color: wheat; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+
 .fotter-container{
-    /* margin-top: 1rem; */
-    /* border-top: 1px solid rgb(146, 144, 144); */
-    /* background-color: black ; */
-    height: 250px;
-    display: flex;
-    justify-content: center;
-    background-color:  #2c3e50;
-    border-bottom: 1px solid white;
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+}
 
+.fotter-inner{
+  width: 100%;
+  max-width: 1200px;
+}
+
+.fotter-content{
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 26rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.range, .Legal, .authlogo { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.range h1, .Legal h1, .socialicon h1{
+  font-size: 1.7rem;
+  color: wheat;
+  margin: 0 0 0.6rem 0;
+}
+
+.range a, .Legal a{
+  text-decoration: none;
+  color: wheat;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.social-row { display: flex; align-items: center; }
+.socialicon a{ margin-right: 0.6rem; display: inline-block; }
+.socialicon img{ width: 25px; height: 25px; display: block; }
+
+.authlogo img{
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
 }
 
 .stamp{
-    background-color: #2c3e50;
-    color: wheat;
-    padding-left: 2rem;
-    height: 4rem;
-    padding-top: 1.3rem;
-    
+  background-color: #2c3e50;
+  color: wheat;
+  padding: 1rem 2rem;
+  text-align: left;
 }
 
-
-
-
-
-.fotter-content{
-margin-top: 2rem;
-display: flex;
-gap: 25rem;
-/* margin: 3rem; */
-/* margin-left: 2rem; */
-/* margin-right: 2rem; */
-/* padding: 2rem; */
-
+/* ---------------- Tablet ---------------- */
+@media (max-width: 1024px) {
+  .fotter-content{ gap: 10rem; }
+  .authlogo img{ width: 120px; height: 120px; }
+  .range h1, .Legal h1{ font-size: 1.4rem; }
+  .range a, .Legal a{ font-size: 1.05rem; }
 }
 
-.range{
-display: flex;
-flex-direction: column;
-gap: 0.5rem;
-/* margin-left: 4rem; */
+/* ---------------- Mobile ---------------- */
+@media (max-width: 600px) {
+  .fotter-container{ padding: 1rem; }
+  .fotter-content{
+    flex-direction: column;
+    align-items: flex-start; /* SHIFT CONTENT RIGHT on mobile */
+    gap: 1rem;
+  }
 
-}
-.range h1{
-font-size: 1.7rem;
-color: wheat;
-margin-bottom: 1rem;
-}
+  /* Keep headings and links readable but smaller */
+  .range h1, .Legal h1, .socialicon h1{ font-size: 1.25rem; }
+  .range a, .Legal a{ font-size: 1rem; }
 
+  /* Make social icons a little bigger tap targets */
+  .socialicon img{ width: 28px; height: 28px; }
 
-.range a{
-text-decoration: none;
-color: wheat;
-font-size: 1.2rem;
-font-weight: 600;
-font-style: initial;
-}
+  /* Reduce logo size and remove large left margin */
+  .authlogo img{ width: 100px; height: 100px; margin-left: 0; }
 
-.About{
-display: flex;
-flex-direction: column;
-gap: 0.5rem;
+  /* Stamp aligned to right as requested */
+  .stamp{ text-align: start; padding-right: 1rem; }
 
+  /* Prevent huge horizontal gaps on small screens */
+  .fotter-content { gap: 0.8rem; }
 }
 
-.About h1{
-margin-bottom: 1rem;
-color: white;
+/* small polish for extra-small screens */
+@media (max-width: 380px) {
+  .range h1, .Legal h1{ font-size: 1.1rem; }
+  .range a, .Legal a{ font-size: 0.95rem; }
 }
-.About a{
-text-decoration: none;
-color: whitesmoke;
-font-size: 1.2rem;
-font-weight: 400;
-font-style: initial;
-}
-.Legal{
-display: flex;
-flex-direction: column;
-gap: 0.5rem;
-/* margin-left: 14rem; */
-
-
-}
-
-.Legal h1{
-margin-bottom: 1rem;
-font-size: 1.7rem;
-color: wheat;
-}
-.Legal a{
-text-decoration: none;
-color: wheat;
-font-size: 1.2rem;
-font-weight: 600;
-font-style: initial;
-}
-
-.socialicon a{
-  margin: 0.5rem;
-}
-
-.socialicon h1{
-    font-size: 1.3rem;
-    color:wheat;
-}
-
-
-
-.authlogo img{
-    width: 200px;
-    height: 200px;
-    margin-left: 15rem;
-    /* overflow: hidden; */
-
-}
-
-

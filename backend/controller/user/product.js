@@ -4,7 +4,8 @@ const productModel = require("../../model/product")
 exports.getProductsByCategory = async (req, res) => {
     try {
         const { category,tag } = req.params;
-        
+        console.log(category)
+
         const products = await productModel.find({Category:category,Tag:tag})
         if(!products){
             return res.status(2)

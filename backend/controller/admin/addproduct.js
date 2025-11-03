@@ -29,7 +29,7 @@ exports.addProduct = [upload.array("image",5),async(req,res)=>{
             Category:data.Category,
             image :imagePaths,
             Description:data.Description,
-            Tag:data.Tag
+            Tag:data.Tag?data.Tag:"null"
         });
 
        await newProduct.save();

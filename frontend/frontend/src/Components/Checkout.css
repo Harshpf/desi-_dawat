@@ -1,9 +1,9 @@
-/* Checkout.css */
+/* ------------------- Checkout Page Base ------------------- */
 .checkout-page {
   margin-top: 11rem;
   max-width: 1100px;
-  margin-left: 6rem;
-  /* margin: 24px auto; */
+  margin-left: auto;
+  margin-right: auto;
   padding: 20px;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   color: #1f2937;
@@ -15,43 +15,12 @@
   font-size: 22px;
 }
 
-.checkout-steps {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.step {
-  flex: 1 1 0;
-  padding: 8px 12px;
-  text-align: center;
-  border-radius: 10px;
-  background: #f3f4f6;
-  color: #6b7280;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.step.active {
-  background: #2563eb;
-  color: #fff;
-  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.12);
-}
-
-.step.done {
-  background: #10b981;
-  color: #fff;
-}
-
 .checkout-layout {
   display: grid;
-  grid-template-columns: 1fr 380px;
+  grid-template-columns: 1fr 380px; /* Left = form, Right = saved addresses */
   gap: 20px;
   align-items: start;
 }
-
-.checkout-left, .checkout-right { }
 
 .checkout-card {
   background: #fff;
@@ -181,25 +150,12 @@
 
 button { cursor: pointer; }
 
-.success { border-left: 4px solid #10b981; }
-
-.address-preview { padding: 10px; border-radius: 8px; background: #fbfdff; border: 1px solid #eef6ff; }
-
-.order-actions { display: flex; gap: 8px; margin-top: 12px; }
-
-@media (max-width: 900px) {
-  .checkout-layout { grid-template-columns: 1fr; }
-  .checkout-steps { flex-direction: column; gap: 8px; }
-  .checkout-actions { justify-content: space-between; }
-}
-
-/* Place Order button: centered, green, wider */
 .place-order-btn {
-  background: #10b981;        /* green */
+  background: #10b981;
   color: white;
   border: none;
   padding: 14px 20px;
-  width: 320px;              /* wider — change value if you want more/less */
+  width: 320px;
   max-width: 90%;
   border-radius: 12px;
   font-weight: 700;
@@ -214,15 +170,6 @@ button { cursor: pointer; }
   transform: translateY(-2px);
   box-shadow: 0 12px 32px rgba(16,185,129,0.18);
 }
-
-/* Optional: disabled state if you later disable button */
-.place-order-btn:disabled {
-  background: #94d3b6;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-
 
 .modal-overlay {
   position: fixed;
@@ -252,4 +199,74 @@ button { cursor: pointer; }
 .success-message {
   color: green;
 }
+  .checkout-form input{
+    width: 80%;
+  }
 
+/* ------------------- Responsive ------------------- */
+
+/* Tablets ≤1024px */
+@media (max-width: 1024px) {
+  .checkout-layout {
+    grid-template-columns: 1fr; /* stack left/right */
+  }
+  .checkout-left, .checkout-right {
+    width: 100%;
+  }
+  .checkout-card {
+    padding: 14px;
+  }
+  .checkout-row img {
+    width: 50px;
+    height: 50px;
+  }
+  .grand-total {
+    font-size: 16px;
+  }
+  .place-order-btn {
+    width: 90%;
+  }
+  .checkout-form input{
+    width: 80%;
+  }
+}
+
+/* Mobile ≤600px */
+@media (max-width: 600px) {
+  .checkout-page {
+    padding: 10px;
+    margin-top: 6rem;
+  }
+  .checkout-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .checkout-row img {
+    width: 48px;
+    height: 48px;
+  }
+  .inline-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .save-checkbox {
+    margin-left: 0;
+  }
+  .address-actions {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .checkout-left, .checkout-right {
+    width: 100%;
+  }
+  .place-order-btn {
+    width: 100%;
+  }
+  .grand-total {
+    text-align: left;
+  }
+  .checkout-form input{
+    width: 80%;
+  }
+}
