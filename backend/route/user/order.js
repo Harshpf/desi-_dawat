@@ -4,9 +4,9 @@ const {newOrder,orderUserDetail,orderProductDetail} = require("../../controller/
 const {validateUser} = require("../../middleware/authmiddleware")
 
 
-router.post("/newOder",validateUser,newOrder);
-router.get("/orderUserDetails",validateUser,orderUserDetail);
-router.get("/orderproductDetails",validateUser,orderProductDetail);
+router.post("/new",validateUser,newOrder);
+router.get("/userdetails",validateUser,orderUserDetail);
+router.get("/productdetails",validateUser,orderProductDetail);
 
 
 

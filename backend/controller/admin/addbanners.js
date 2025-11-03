@@ -43,6 +43,6 @@ exports.deleteImage = async(req,res) =>{
         const deleteImage = await bannerModel.findByIdAndDelete(imageId);
         res.status(200).json({msg:"image deleted",deleteImage});
     }catch(err){
-            res.status(500).json({ msg: "err from deleting banner" ,message:err.message});
+            res.status(500).json({ msg: "error from deleting banner" ,message:err.message});
     }
 }

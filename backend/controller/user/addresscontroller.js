@@ -5,8 +5,8 @@ exports.getAddress = async(req,res) =>{
 
     try{
         const userId = req.userId;
-        const allAddress = await addressModel.findOne({userId:userId});
-        res.status(200).json({msg:"all address",allAddress});
+        const allAddress = await addressModel.find({userId:userId});
+        res.status(200).json({msg:"all address", allAddress});
     }catch(err){
         res.status(500).json({msg:"error while fetching address", message:err.message});
     }
@@ -19,10 +19,10 @@ exports.addNewAddress = async(req,res) =>{
         const address = req.body;
         const userId = req.userId;
         
-        const addressExist = await addressModel.findOne({pincode:address.pinCode});
-        if(addressExist){
-            res.status(200).json("address already exist , add a new address");
-        }
+        // const addressExist = await addressModel.findOne({pincode:address.pinCode});
+        // if(addressExist){
+        //     return res.status(200).json("address already exist , add a new address");
+        // }
 
         const newAddress = new addressModel({
             userId: userId,
@@ -36,7 +36,7 @@ exports.addNewAddress = async(req,res) =>{
         });
 
         await newAddress.save();
-        res.status(200).json("address added",newAddress);
+        res.status(200).json("address saved succesfully",newAddress);
     }catch(err){
         res.status(500).json({msg:"error from updating address ", message:err.message});
     }
@@ -71,11 +71,11 @@ exports.deleteAddress = async(req,res) =>{
 
     try{
         const addressId = req.params.id;
-        const deletedAddress = await addressModel.findOne({_id:addressId});
-        res.status(200).json({msg:"deleted address",deletedAddress});
+        const deletedAddress = await addressModel.findOneAndDelete({_id:addressId});
+        res.status(200).json({msg:"address deleted succesfully",deletedAddress});
 
     }catch(err){
-        res.status(500).json({msg:" ", message:err.message});
+        res.status(500).json({msg:"error while deleteing address ", message:err.message});
     }
 
 }

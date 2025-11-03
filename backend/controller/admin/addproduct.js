@@ -7,7 +7,7 @@ exports.getProduct =async(req,res)=>{
     const allProducts = await productModel.find();
     res.status(200).json(allProducts);
     }catch(err){
-        res.status(500).json({msg:"",message:err.message})
+        res.status(500).json({msg:"error in fetching product",message:err.message})
     }
 }
 
@@ -33,9 +33,9 @@ exports.addProduct = [upload.array("image",5),async(req,res)=>{
         });
 
        await newProduct.save();
-       res.status(200).json({msg:"product is added"});
+       res.status(200).json({msg:"new product is added"});
     }catch(err){
-        res.status(500).json({msg:"error adding new product",message:err.message})
+        res.status(500).json({msg:"error adding a new product",message:err.message})
     }
 }]
 
@@ -109,8 +109,8 @@ exports.deleteProduct =async(req,res)=>{
      try{
         const productId = req.params.id
         const deleteproduct = await productModel.findByIdAndDelete({_id:productId});
-        res.status(200).json({msg:"product deleted"})
+        res.status(200).json({msg:"product deleted successfully"})
     }catch(err){
         res.status(500).json({msg:"error from deleteProduct",message:err.message})
-    }
+    }
 }

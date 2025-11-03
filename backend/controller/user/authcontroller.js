@@ -16,16 +16,12 @@ function sendTokenResponse(userid, res){
 
 exports.signup = async (req, res) => {
   try {
-    const { name, email, password } = req.body; // 👈 match frontend keys
+    const { name, email, password } = req.body;
 
-    // Check if user already exists
-    const userExist = await userModel.findOne({ email }); // 👈 lowercase
+    const userExist = await userModel.findOne({ email }); 
     if (userExist) {
       return res.status(400).json({ msg: "already registered" });
     }
-
-    // Hash password before saving
-    // const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new userModel({
       name,
@@ -38,26 +34,21 @@ exports.signup = async (req, res) => {
 
     return res.status(200).json({ msg: "Signup successful" });
   } catch (error) {
-    return res.status(500).json({
-      msg: "error in signup",
-      message: error.message
-    });
+    return res.status(500).json({msg: "error in signup",message: error.message});
   }
 };
 
 
-
-
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body; // 👈 destructure cleanly
+    const { email, password } = req.body; 
 
     const userExist = await userModel.findOne({ email });
     if (!userExist) {
       return res.status(400).json({ msg: "Register first" });
     }
 
-    // 👇 fix typo here
+
     const matchPassword = await bcrypt.compare(password, userExist.password);
     if (!matchPassword) {
       return res.status(400).json({ msg: "the password is incorrect" });
@@ -67,4 +58,12 @@ exports.login = async (req, res) => {
   } catch (error) {
     res.status(500).json({ msg: "error from login", message: error.message });
   }
+};
+
+exports.logout = (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    sameSite: "strict"
+  });
+  res.status(200).json({ msg: "Logout successful" });
 };

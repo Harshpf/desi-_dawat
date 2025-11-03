@@ -1,13 +1,13 @@
-const orderProductModel = require("../../model/order")
-const orderUserModel =require("../../model/order")
-const address = require("../../model/address")
+const {orderProductModel , orderUserModel} = require("../../model/order")
+const addressModel = require("../../model/address")
 const Product = require("../../model/product")
 
 exports.newOrder = async(req,res)=>{
     try{
-    const { userId, addressId, items } = req.body; 
+    const {orderId, addressId, items ,totalAmount} = req.body; 
+    const userId = req.userId;
 
-    const address = await address.findById(addressId);
+    const address = await addressModel.findById(addressId);
     if (!address) return res.status(400).json({ message: "Invalid address" });
 
     const shippingAddress = {
@@ -21,13 +21,13 @@ exports.newOrder = async(req,res)=>{
       country: address.country,
     };
     const saveDetails = new orderUserModel({
-      user: userId,
+      _id:orderId,
+      userId: userId,
       shippingAddress,
     });
     await saveDetails.save();
 
 
-    let totalAmount = 0;
     const productDetails = [];
 
     for (const item of items) {
@@ -40,12 +40,11 @@ exports.newOrder = async(req,res)=>{
         price: product.Price,     
         quantity: item.quantity,
       });
-
-      totalAmount += product.Price * item.quantity;
     }
 
 
     const orderProduct = new orderProductModel({
+      _id:orderId,
       items: productDetails,
       totalAmount,
       paymentStatus: "pending",
@@ -56,33 +55,42 @@ exports.newOrder = async(req,res)=>{
 
     res.status(201).json({
       message: "Order created successfully",
-      order,
+      saveDetails,
       orderProduct,
     });
     }catch(err){
-        res.status(500).json({msg:"error from addBasicOrderDetails",message:err.message});
+        res.status(500).json({msg:"error while adding new order",message:err.message});
     }
 }
 
 
 exports.orderUserDetail = async(req,res)=>{
   try{
-      const Id = req.date.id;
+     const Id = req.body.orderId;
       const userOrderDetails = await orderUserModel.findById(Id);
-      res.status(200).status(userOrderDetails);
+     
+      if(!userOrderDetails){
+        return res.status(400).json("did found the userOrderData")
+      }
+
+      res.status(200).json(userOrderDetails);
   }catch(error){
-      res.status(500).json({msg:"error from orderUserDetaisl",message:err.message});
+      res.status(500).json({msg:"error from orderUserDetaisl",message:error.message});
   }
 }
 
 exports.orderProductDetail = async(req,res)=>{
   try{
-      const Id = req.date.id;
-      const userOrderDetails = await orderUserModel.findById(Id);
-      res.status(200).status(userOrderDetails);
+    const Id = req.body.orderId;
+    const orderProductDetail = await orderUserModel.findById(Id);
+    
+     if(!orderProductDetail){
+        return res.status(400).json("did found the userOrderData")
+      }
+
+    res.status(200).json(orderProductDetail);
   }catch(error){
-      res.status(500).json({msg:"error from orderUserDetaisl",message:err.message});
+      res.status(500).json({msg:"error from orderUserDetaisl",message:error.message});
   }
 }
 
-//hii

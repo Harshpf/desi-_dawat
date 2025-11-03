@@ -3,9 +3,9 @@ const { getAddress, addNewAddress, deleteAddress, updateAddress}  = require("../
 const router = express.Router();
 const { validateUser } = require("../../middleware/authmiddleware")
 
-router.get("/allAddress",validateUser,getAddress);
-router.post("/addAddress",validateUser,addNewAddress);
-router.delete("/deleteAddress/:id",validateUser,deleteAddress);
-router.put("/updateAddress/:id",validateUser,updateAddress);
+router.get("/all",validateUser,getAddress);
+router.post("/new",validateUser,addNewAddress);
+router.delete("/delete/:id",validateUser,deleteAddress);
+router.put("/update/:id",validateUser,updateAddress);
 
 module.exports = router 

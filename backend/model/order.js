@@ -1,11 +1,15 @@
-const mongoose = required("mongoose")
+const mongoose = require("mongoose")
 
 const orderUserDetailsSchema = new mongoose.Schema(
   {
-    user: {
+    _id:{
+      type:String,
+      rquired:true
+
+    },
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
     },
 
     shippingAddress: {
@@ -15,7 +19,7 @@ const orderUserDetailsSchema = new mongoose.Schema(
       city: String,
       state: String,
       district:String,
-      postalCode: String,
+      pinCode: String,
       country: String,
     },
   },
@@ -27,6 +31,11 @@ const orderUserDetailsSchema = new mongoose.Schema(
 
 const orderProductDetailsSchema = new mongoose.Schema(
     {
+      _id:{
+      type:String,
+      rquired:true
+
+    },
    items: [
       {
         product: {
@@ -66,6 +75,6 @@ const orderProductDetailsSchema = new mongoose.Schema(
 
 
 
-const orderProductModel = new mongoose.model("orderproduct",orderProductDetailsSchema);
-const orderUserModel = new mongoose.model("orders",orderUserDetailsSchema);
-module.exports = {orderModel,orderProductModel};
+const orderProductModel = new mongoose.model("orderedproducts",orderProductDetailsSchema);
+const orderUserModel = new mongoose.model("ordereduser",orderUserDetailsSchema);
+module.exports = {orderUserModel,orderProductModel};
