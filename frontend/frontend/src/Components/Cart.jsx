@@ -141,58 +141,240 @@
 // }
 
 
+// import React, { useState, useEffect } from "react";
+// import "./Cart.css";
+// import { useNavigate } from "react-router-dom";
+// import { getCart, deletecart} from "./Allapi";
+
+// export default function Cart() {
+//   const [cart, setCart] = useState([]);
+//   const navigate = useNavigate();
+//   const baseURL = "http://localhost:5000/"; // for images
+
+//   // Load cart from localStorage
+//   useEffect(() => {
+//     const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+//     setCart(storedCart);
+//   }, []);
+
+//   // Save cart to localStorage whenever it changes
+//   useEffect(() => {
+//     localStorage.setItem("cart", JSON.stringify(cart));
+//   }, [cart]);
+
+//   // Fetch cart from backend
+//   useEffect(() => {
+//     const fetchCart = async () => {
+//       try {
+//         const res = await getCart();
+
+//         // Map backend response to frontend structure
+//         const mappedCart = res.data.cartProducts.map((item) => {
+//           const product = item.productId;
+//           return {
+//             key: product._id,
+//             name: product.Name,
+//             image: product.image?.length > 0 ? `${baseURL}${product.image[0]}` : "",
+//             unitPrice: product.Price,
+//             quantity: 1,          // default
+//             weight: "500g",       // default
+//             total: product.Price, // default total
+//           };
+//         });
+
+//         setCart(mappedCart);
+//         localStorage.setItem("cart", JSON.stringify(mappedCart));
+//       } catch (err) {
+//         console.error("Error fetching cart", err);
+//       }
+//     };
+
+//     fetchCart();
+//   }, []);
+
+//   // Increase quantity
+//   const increaseQty = (key) => {
+//     setCart((prev) =>
+//       prev.map((item) =>
+//         item.key === key
+//           ? {
+//               ...item,
+//               quantity: item.quantity + 1,
+//               total: (item.quantity + 1) * item.unitPrice,
+//             }
+//           : item
+//       )
+//     );
+//   };
+
+//   // Decrease quantity
+//   const decreaseQty = (key) => {
+//     setCart((prev) =>
+//       prev.map((item) =>
+//         item.key === key
+//           ? {
+//               ...item,
+//               quantity: item.quantity > 1 ? item.quantity - 1 : 1,
+//               total:
+//                 (item.quantity > 1 ? item.quantity - 1 : 1) * item.unitPrice,
+//             }
+//           : item
+//       )
+//     );
+//   };
+
+//   // Remove item
+//    const removeItem = async (key) => {
+//     try {
+//       await deletecart(key); // delete from backend
+//       setCart((prev) => prev.filter((item) => item.key !== key)); // remove locally
+//       localStorage.setItem("cart", JSON.stringify(cart.filter((item) => item.key !== key)));
+//     } catch (err) {
+//       console.error("Error deleting item", err);
+//     }
+//   };
+
+//   // Cart Total
+//   const grandTotal = cart.reduce((sum, item) => sum + item.total, 0);
+
+//   return (
+//     <div className="cart-page">
+//       <h2>Shopping Cart</h2>
+
+//       {cart.length === 0 ? (
+//         <p>Your cart is empty!</p>
+//       ) : (
+//         <>
+//           <div className="cart-header">
+//             <span className="product">Product</span>
+//             <span> Price</span>
+//             <span>Quantity</span>
+//             <span>Total</span>
+//           </div>
+
+//           <div className="cart-items">
+//             {cart.map((item) => (
+//               <div key={item.key} className="cart-row">
+//                 {/* Product (Image + Name + Weight + Remove) */}
+//                 <div className="cart-product">
+//                   <img src={item.image} alt={item.name} />
+//                   <div>
+//                     <h4>{item.name}</h4>
+//                     <p>{item.weight}</p>
+//                     <button
+//                       className="remove-link"
+//                       onClick={() => removeItem(item.key)}
+//                     >
+//                       Remove
+//                     </button>
+//                   </div>
+//                 </div>
+
+//                 {/* Unit Price */}
+//                 {/* <div className="cart-price">₹{item.unitPrice.toFixed(2)}</div> */}
+//                 <div className="cart-price">₹{(item.unitPrice || 0).toFixed(2)}</div>
+
+
+//                 {/* Quantity */}
+//                 <div className="cart-qty">
+//                   <button onClick={() => decreaseQty(item.key)}>-</button>
+//                   <span>{item.quantity}</span>
+//                   <button onClick={() => increaseQty(item.key)}>+</button>
+//                 </div>
+
+//                 {/* Total per Item */}
+//                 {/* <div className="cart-total">₹{item.total.toFixed(2)}</div> */}
+//                 <div className="cart-total">₹{(item.total || 0).toFixed(2)}</div>
+
+//               </div>
+//             ))}
+//           </div>
+
+//           {/* Grand Total */}
+//           <div className="cart-grand-total">
+//             <h3>Grand Total: ₹{grandTotal.toFixed(2)}</h3>
+//             <button
+//               onClick={() => navigate("/checkout")}
+//               className="checkout-btn"
+//             >
+//               Checkout
+//             </button>
+//           </div>
+//         </>
+//       )}
+//     </div>
+//   );
+// }
+
+
+
 import React, { useState, useEffect } from "react";
 import "./Cart.css";
 import { useNavigate } from "react-router-dom";
-import { getCart, deletecart} from "./Allapi";
+import { getCart, deletecart, mergeCart } from "./Allapi";
 
 export default function Cart() {
   const [cart, setCart] = useState([]);
   const navigate = useNavigate();
-  const baseURL = "http://localhost:5000/"; // for images
+  const baseURL = "http://localhost:5000/";
 
-  // Load cart from localStorage
+  // 1️⃣ Load cart from localStorage initially
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
     setCart(storedCart);
   }, []);
 
-  // Save cart to localStorage whenever it changes
+  // 2️⃣ Save cart to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  // Fetch cart from backend
+
+
   useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const res = await getCart();
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user || !user.token) return; // only merge if logged in
 
-        // Map backend response to frontend structure
-        const mappedCart = res.data.cartProducts.map((item) => {
-          const product = item.productId;
-          return {
-            key: product._id,
-            name: product.Name,
-            image: product.image?.length > 0 ? `${baseURL}${product.image[0]}` : "",
-            unitPrice: product.Price,
-            quantity: 1,          // default
-            weight: "500g",       // default
-            total: product.Price, // default total
-          };
-        });
+  const mergeLocalToBackend = async () => {
+    try {
+      const localCart = JSON.parse(localStorage.getItem("cart")) || [];
+      if (localCart.length === 0) return;
 
-        setCart(mappedCart);
-        localStorage.setItem("cart", JSON.stringify(mappedCart));
-      } catch (err) {
-        console.error("Error fetching cart", err);
-      }
-    };
+      const productArray = localCart.map((item) => item.key);
 
-    fetchCart();
-  }, []);
+      await mergeCart(productArray);
+      console.log("✅ Local cart merged to backend");
+        localStorage.removeItem("cart");
 
-  // Increase quantity
+      // Fetch updated backend cart
+      const res = await getCart();
+      const mappedCart = res.data.cartProducts.map((item) => {
+        const p = item.productId;
+        return {
+          key: p._id,
+          name: p.Name,
+          image: p.image?.length > 0 ? `${baseURL}${p.image[0]}` : "",
+          unitPrice: p.Price,
+          quantity: 1,
+          total: p.Price,
+        };
+      });
+
+      // Update frontend + clear local
+      setCart(mappedCart);
+      localStorage.setItem("cart", JSON.stringify(mappedCart));
+    
+    } catch (err) {
+      console.error("Error merging cart:", err);
+    }
+  };
+
+  mergeLocalToBackend();
+}, []);
+
+
+  // ================= Quantity + Remove functions stay same =================
+
   const increaseQty = (key) => {
     setCart((prev) =>
       prev.map((item) =>
@@ -207,7 +389,6 @@ export default function Cart() {
     );
   };
 
-  // Decrease quantity
   const decreaseQty = (key) => {
     setCart((prev) =>
       prev.map((item) =>
@@ -223,31 +404,42 @@ export default function Cart() {
     );
   };
 
-  // Remove item
-   const removeItem = async (key) => {
-    try {
-      await deletecart(key); // delete from backend
-      setCart((prev) => prev.filter((item) => item.key !== key)); // remove locally
-      localStorage.setItem("cart", JSON.stringify(cart.filter((item) => item.key !== key)));
-    } catch (err) {
-      console.error("Error deleting item", err);
-    }
-  };
+  
+const removeItem = async (key) => {
+  const user = JSON.parse(localStorage.getItem("user"));
 
-  // Cart Total
+  try {
+    if (user && user.token) {
+      // ✅ Logged-in user → delete from backend
+      await deletecart(key);
+      console.log("🗑️ Product removed from backend cart");
+    }
+
+    // ✅ Always remove from local (for both guest + logged-in)
+    setCart((prev) => {
+      const updated = prev.filter((item) => item.key !== key);
+      localStorage.setItem("cart", JSON.stringify(updated));
+      return updated;
+    });
+
+  } catch (err) {
+    console.error("❌ Error deleting item:", err);
+  }
+};
+
+
   const grandTotal = cart.reduce((sum, item) => sum + item.total, 0);
 
   return (
     <div className="cart-page">
       <h2>Shopping Cart</h2>
-
       {cart.length === 0 ? (
         <p>Your cart is empty!</p>
       ) : (
         <>
           <div className="cart-header">
             <span className="product">Product</span>
-            <span> Price</span>
+            <span>Price</span>
             <span>Quantity</span>
             <span>Total</span>
           </div>
@@ -255,12 +447,10 @@ export default function Cart() {
           <div className="cart-items">
             {cart.map((item) => (
               <div key={item.key} className="cart-row">
-                {/* Product (Image + Name + Weight + Remove) */}
                 <div className="cart-product">
                   <img src={item.image} alt={item.name} />
                   <div>
                     <h4>{item.name}</h4>
-                    <p>{item.weight}</p>
                     <button
                       className="remove-link"
                       onClick={() => removeItem(item.key)}
@@ -270,27 +460,23 @@ export default function Cart() {
                   </div>
                 </div>
 
-                {/* Unit Price */}
-                {/* <div className="cart-price">₹{item.unitPrice.toFixed(2)}</div> */}
-                <div className="cart-price">₹{(item.unitPrice || 0).toFixed(2)}</div>
+                <div className="cart-price">
+                  ₹{(item.unitPrice || 0).toFixed(2)}
+                </div>
 
-
-                {/* Quantity */}
                 <div className="cart-qty">
                   <button onClick={() => decreaseQty(item.key)}>-</button>
                   <span>{item.quantity}</span>
                   <button onClick={() => increaseQty(item.key)}>+</button>
                 </div>
 
-                {/* Total per Item */}
-                {/* <div className="cart-total">₹{item.total.toFixed(2)}</div> */}
-                <div className="cart-total">₹{(item.total || 0).toFixed(2)}</div>
-
+                <div className="cart-total">
+                  ₹{(item.total || 0).toFixed(2)}
+                </div>
               </div>
             ))}
           </div>
 
-          {/* Grand Total */}
           <div className="cart-grand-total">
             <h3>Grand Total: ₹{grandTotal.toFixed(2)}</h3>
             <button

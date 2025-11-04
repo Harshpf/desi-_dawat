@@ -1,27 +1,48 @@
 const productModel = require("../../model/product")
 
 
-exports.getProductsByCategory = async (req, res) => {
-    try {
-        const { category,tag } = req.params;
-        console.log(category)
+// exports.getProductsByCategory = async (req, res) => {
+//     try {
+//         const { category,tag } = req.params;
+//         console.log(category)
 
-        const products = await productModel.find({Category:category,Tag:tag})
-        if(!products){
-            return res.status(2)
-        }
-        res.status(200).json({msg:"all products ",products});
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+//         const products = await productModel.find({Category:category,Tag:tag})
+//         if(!products){
+//             return res.status(200).json(products);
+//         }
+//         res.status(200).json({msg:"all products ",products});
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// }
+exports.getProductsByCategory = async (req, res) => {
+  try {
+    const { category, tag } = req.params;
+    console.log("Requested category:", category, "Tag:", tag);
+
+    // Build query dynamically
+    let filter = { Category: category };
+    if (tag !== "null") {
+      filter.Tag = tag;
     }
-}
+
+    // Fetch products
+    const products = await productModel.find(filter);
+
+    // Send back plain array (frontend expects this)
+    return res.status(200).json(products);
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 exports.getAllProducts = async (req, res) => {
     try {
         const products = await productModel.find();
         res.status(200).json(products);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({msg:"err from get all product", error: error.message });
     }
 }
 

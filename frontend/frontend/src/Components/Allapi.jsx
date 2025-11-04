@@ -8,8 +8,8 @@ export const signupUser = (name, email, password) =>
 export const Loginuser = (email,password) =>
 API.post("/auth/login",{  email , password},{ withCredentials: true });
 
-// export const Logout = (email,password) =>
-// API.post("/auth/logout",{  email , password},{ withCredentials: true });  //need to change logout api
+export const Logout = (email,password) =>
+API.post("/auth/logout",{},{ withCredentials: true });  //need to change logout api
 
 
 export const getbanner = () =>
@@ -19,7 +19,7 @@ export const getProductByCategory = (category,tag) =>
   API.get(`/product/category/${category}/${tag}`, { withCredentials: true });
 
 export const getallproduct = ()=>
-API.get("/product/getallproduct");
+API.get("/product/allproducts");
 
 
 export const addtocart = (productId, productData) => {
@@ -32,10 +32,14 @@ export const addtocart = (productId, productData) => {
 
 
 export const getCart = ()=>
-  API.get("/cart/getCartProdut", { withCredentials: true })
+  API.get("/cart/getCartProduct", { withCredentials: true })
+
+export const mergeCart = (productArray) =>
+  API.post("/cart/mergecart", { productArray }, { withCredentials: true });
+
 
 export const deletecart =(productId) =>
-  API.delete(`/cart/deleteCartProduct/${productId}`)
+  API.delete(`/cart/deletecartproduct/${productId}`)
 
 
 export const getspecialproduct = (category,tag) =>

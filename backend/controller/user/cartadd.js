@@ -129,7 +129,7 @@ exports.getCart = async (req, res) => {
 
     const cart = await cartModel
       .findOne({ userId })
-      .populate({ path: "cartProducts", select: "Name Price image" });
+      .populate({ path: "cartProducts.productId", select: "Name Price image" });
 
     if (!cart || cart.cartProducts.length === 0) {
       return res.status(200).json({ msg: "Cart is empty", cartProducts: [] });
@@ -142,7 +142,41 @@ exports.getCart = async (req, res) => {
 };
 
 // ================== Delete Product from Cart ==================
-exports.deleteProduct = async (req, res) => {
+// exports.deleteProduct = async (req, res) => {
+//   try {
+//     const userId = req.userId;
+//     const productId = req.params.id;
+
+//     if (!mongoose.Types.ObjectId.isValid(productId)) {
+//       return res.status(400).json({ msg: "Invalid productId" });
+//     }
+
+//     const cart = await cartModel.findOne({ userId });
+
+//     if (!cart) {
+//       return res.status(404).json({ msg: "Cart not found" });
+//     }
+
+//     // Remove product from cartProducts array
+    
+//     const index = cart.cartProducts.findIndex(
+//   item => item.productId.toString() === productId.toString()
+// );
+
+
+//     if (index === -1) {
+//       return res.status(404).json({ msg: "Product not found in cart" });
+//     }
+
+//     cart.cartProducts.splice(index, 1);
+//     await cart.save();
+
+//     res.status(200).json({ msg: "Product removed from cart", cart });
+//   } catch (error) {
+//     res.status(500).json({ msg: "Error from deleteProduct", message: error.message });
+//   }
+// };
+   exports.deleteProduct = async (req, res) => {
   try {
     const userId = req.userId;
     const productId = req.params.id;
@@ -152,26 +186,25 @@ exports.deleteProduct = async (req, res) => {
     }
 
     const cart = await cartModel.findOne({ userId });
+    if (!cart) return res.status(404).json({ msg: "Cart not found" });
 
-    if (!cart) {
-      return res.status(404).json({ msg: "Cart not found" });
-    }
-
-    // Remove product from cartProducts array
+    // ✅ FIX HERE
     const index = cart.cartProducts.findIndex(
-      item => item.toString() === productId.toString()
+      (item) => item.toString() === productId.toString()
     );
 
-    if (index === -1) {
+    if (index === -1)
       return res.status(404).json({ msg: "Product not found in cart" });
-    }
 
     cart.cartProducts.splice(index, 1);
     await cart.save();
 
     res.status(200).json({ msg: "Product removed from cart", cart });
   } catch (error) {
-    res.status(500).json({ msg: "Error from deleteProduct", message: error.message });
+    res.status(500).json({
+      msg: "Error from deleteProduct",
+      message: error.message,
+    });
   }
 };
 
