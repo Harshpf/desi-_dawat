@@ -23,27 +23,48 @@ export const Login = () => {
     navigate('/signup')
   }
 
-  const handleSubmit= async(e) => {
-         e.preventDefault();
+  // const handleSubmit= async(e) => {
+  //        e.preventDefault();
 
-         try{
-         const res = await Loginuser( form.email,form.password);
-             console.log("Login API Response:", res);  
+  //        try{
+  //        const res = await Loginuser( form.email,form.password);
+  //            console.log("Login API Response:", res);  
 
-                  localStorage.setItem("isLoggedIn", "true");
+  //                 localStorage.setItem("isLoggedIn", "true");
 
             
 
 
-         setMsg(res.data.msg||"login sucessful");
-            navigate('/');
-         }
-         catch(err){
-          console.log("error from login");
-           setMsg(err.response?.data?.msg || "Login failed");
-         } 
+  //        setMsg(res.data.msg||"login sucessful");
+  //           navigate('/');
+  //        }
+  //        catch(err){
+  //         console.log("error from login");
+  //          setMsg(err.response?.data?.msg || "Login failed");
+  //        } 
 
+  // }
+
+     const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await Loginuser(form.email, form.password);
+    console.log("Login API Response:", res);
+
+    if (res.status === 200) {
+      localStorage.setItem("isLoggedIn", "true");
+      setMsg(res.data.msg || "login successful");
+      navigate('/');
+    } else {
+      setMsg(res.data.msg || "Invalid credentials");
+    }
+  } catch (err) {
+    console.log("error from login");
+    setMsg(err.response?.data?.msg || "Login failed");
   }
+};
+
 
     
     

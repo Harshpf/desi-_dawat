@@ -24,7 +24,7 @@ API.get("/product/allproducts");
 
 export const addtocart = (productId, productData) => {
   
-  return API.post(`/cart/addToCart/${productId}`,productData, {
+  return API.post(`/cart/addtocart/${productId}`,productData, {
     headers: { "Content-Type": "application/json" },
     withCredentials: true,
   });
@@ -32,7 +32,7 @@ export const addtocart = (productId, productData) => {
 
 
 export const getCart = ()=>
-  API.get("/cart/getCartProduct", { withCredentials: true })
+  API.get("/cart/getcartproduct", { withCredentials: true })
 
 export const mergeCart = (productArray) =>
   API.post("/cart/mergecart", { productArray }, { withCredentials: true });
@@ -44,3 +44,32 @@ export const deletecart =(productId) =>
 
 export const getspecialproduct = (category,tag) =>
   API.get(`/product/category/${category}/${tag}`, { withCredentials: true });
+
+// GET all addresses
+export const getAddresses = () => API.get("/address/all");
+
+// ADD new address
+export const addNewAddress = (data) => API.post("/address/new", data);
+
+// UPDATE address
+export const updateAddress = (id, data) => API.put(`/address/update/${id}`, data);
+
+// DELETE address
+export const deleteAddress = (id) => API.delete(`/address/delete/${id}`);
+
+
+
+export const createOrder = (data) =>
+  API.post("/order/new", data, { withCredentials: true });
+
+// Get all orders of current user
+export const getAllOrders = () =>
+  API.get("/order/all", { withCredentials: true });
+
+// Get order user details by order ID
+export const getOrderUserDetail = (orderId) =>
+  API.get(`/order/userdetails/${orderId}`, { withCredentials: true });
+
+// Get order product details by order ID
+export const getOrderProductDetail = (orderId) =>
+  API.get(`/order/productdetails/${orderId}`, { withCredentials: true });

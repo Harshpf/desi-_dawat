@@ -1,148 +1,182 @@
-const cartModel = require("../../model/cart");
-const mongoose = require('mongoose');
+// const cartModel = require("../../model/cart");
+// const mongoose = require('mongoose');
 
 
-exports.addToCart = async (req, res) => {
-  try {
-    const userId = req.userId;
-    const productId = req.params.id;
-  
-    productObjectId = new mongoose.Types.ObjectId(productId);
-
-    if (!productId) {
-      return res.status(400).json({ msg: "Provide a productId" });
-    }
-
-    const cart = await cartModel.findOne({userId:userId});
-
-    if(!cart){
-      const newCart = new cartModel({
-        userId,
-        cartProducts:[productObjectId]
-      });
-      
-     await newCart.save();
-    }
-    else{
-
-      const productindex = cart.cartProducts.findIndex(
-        item => item.toString() === productObjectId.toString()
-      );
-
-      if(productindex!=-1){
-        return res.status(400).json({ msg: "Product already added" });
-      }
-      else{
-        cart.cartProducts.push(productObjectId);
-      }
-      await cart.save()
-    }
-  
-  return res.status(200).json({ msg: "Product added to cart", cart});
-
-    }catch (error) {
-    res.status(500).json({ msg: "Error from addToCart", message: error.message });
-  }
-};
-
-
-// exports.getCart = async (req, res) => {
-//   try {
-//     const userId = req.userId;
-//    const cartProducts = await cartModel
-//    .find({ userId })
-//    .populate({ path: "productId", select: "Name Price image" });
-
-//     if (!cartProducts || cartProducts.length === 0) {
-//       return res.status(200).json({ msg: "Cart is empty", cartProducts: [] });
-//     }
-
-//     res.status(200).json({ msg: "cartProducts", cartProducts });
-//   } catch (error) {
-//     res.status(500).json({ msg: "Error from getCart", message: error.message });
-//   }
-// };
-
-
-// exports.deleteProduct = async (req, res) => {
+// exports.addToCart = async (req, res) => {
 //   try {
 //     const userId = req.userId;
 //     const productId = req.params.id;
+  
+//     productObjectId = new mongoose.Types.ObjectId(productId);
 
 //     if (!productId) {
 //       return res.status(400).json({ msg: "Provide a productId" });
 //     }
 
-//     const deleteProduct = await cartModel.findOneAndDelete({ userId, productId });
-
-//     if (!deleteProduct) {
-//       return res.status(404).json({ msg: "Product not found in cart" });
-//     }
-
-//     res.status(200).json({ msg: "Product removed from cart", deleteProduct });
-//   } catch (error) {
-//     res.status(500).json({ msg: "Error from deleteProduct", message: error.message });
-//   }
-// };
-
-// exports.mergeCart = async(req,res) =>{
-//   try{
-//     const userId = req.userId;
-//     const productArray = req.body.productArray;
-
 //     const cart = await cartModel.findOne({userId:userId});
 
-//      if(!cart){
-//       const newcart = cartModel({
+//     if(!cart){
+//       const newCart = new cartModel({
 //         userId,
-//         cartProduts : 
+//         cartProducts:[productObjectId]
 //       });
       
-//      await cartProduct.save();
+//      await newCart.save();
 //     }
 //     else{
 
-//       for(productId in productArray){
-//        const productindex = cart.cartProducts.findIndex(
-//         item =>item.toString() === productId.toString()
-//        );
+//       const productindex = cart.cartProducts.findIndex(
+//         item => item.toString() === productObjectId.toString()
+//       );
 
-//        if(productindex==-1){
-//         cart.cartProducts.push(productId);
-//        }
+//       if(productindex!=-1){
+//         return res.status(400).json({ msg: "Product already added" });
 //       }
+//       else{
+//         cart.cartProducts.push(productObjectId);
+//       }
+//       await cart.save()
 //     }
-//     res.status(200).json({msg:"cart merged sucessfully",cart});
-//   }catch(error){
-//     res.status(500).json({msg:"error from merge",message:error.message})
+  
+//   return res.status(200).json({ msg: "Product added to cart", cart});
+
+//     }catch (error) {
+//     res.status(500).json({ msg: "Error from addToCart", message: error.message });
 //   }
-// }
+// };
 
 
-// ================== Add To Cart ==================
-// Already working, no change needed
+// // exports.getCart = async (req, res) => {
+// //   try {
+// //     const userId = req.userId;
+// //    const cartProducts = await cartModel
+// //    .find({ userId })
+// //    .populate({ path: "productId", select: "Name Price image" });
 
-// ================== Get Cart ==================
-exports.getCart = async (req, res) => {
-  try {
-    const userId = req.userId;
+// //     if (!cartProducts || cartProducts.length === 0) {
+// //       return res.status(200).json({ msg: "Cart is empty", cartProducts: [] });
+// //     }
 
-    const cart = await cartModel
-      .findOne({ userId })
-      .populate({ path: "cartProducts.productId", select: "Name Price image" });
+// //     res.status(200).json({ msg: "cartProducts", cartProducts });
+// //   } catch (error) {
+// //     res.status(500).json({ msg: "Error from getCart", message: error.message });
+// //   }
+// // };
 
-    if (!cart || cart.cartProducts.length === 0) {
-      return res.status(200).json({ msg: "Cart is empty", cartProducts: [] });
-    }
 
-    res.status(200).json({ msg: "Cart retrieved successfully", cartProducts: cart.cartProducts });
-  } catch (error) {
-    res.status(500).json({ msg: "Error from getCart", message: error.message });
-  }
-};
+// // exports.deleteProduct = async (req, res) => {
+// //   try {
+// //     const userId = req.userId;
+// //     const productId = req.params.id;
 
-// ================== Delete Product from Cart ==================
-// exports.deleteProduct = async (req, res) => {
+// //     if (!productId) {
+// //       return res.status(400).json({ msg: "Provide a productId" });
+// //     }
+
+// //     const deleteProduct = await cartModel.findOneAndDelete({ userId, productId });
+
+// //     if (!deleteProduct) {
+// //       return res.status(404).json({ msg: "Product not found in cart" });
+// //     }
+
+// //     res.status(200).json({ msg: "Product removed from cart", deleteProduct });
+// //   } catch (error) {
+// //     res.status(500).json({ msg: "Error from deleteProduct", message: error.message });
+// //   }
+// // };
+
+// // exports.mergeCart = async(req,res) =>{
+// //   try{
+// //     const userId = req.userId;
+// //     const productArray = req.body.productArray;
+
+// //     const cart = await cartModel.findOne({userId:userId});
+
+// //      if(!cart){
+// //       const newcart = cartModel({
+// //         userId,
+// //         cartProduts : 
+// //       });
+      
+// //      await cartProduct.save();
+// //     }
+// //     else{
+
+// //       for(productId in productArray){
+// //        const productindex = cart.cartProducts.findIndex(
+// //         item =>item.toString() === productId.toString()
+// //        );
+
+// //        if(productindex==-1){
+// //         cart.cartProducts.push(productId);
+// //        }
+// //       }
+// //     }
+// //     res.status(200).json({msg:"cart merged sucessfully",cart});
+// //   }catch(error){
+// //     res.status(500).json({msg:"error from merge",message:error.message})
+// //   }
+// // }
+
+
+// // ================== Add To Cart ==================
+// // Already working, no change needed
+
+// // ================== Get Cart ==================
+// exports.getCart = async (req, res) => {
+//   try {
+//     const userId = req.userId;
+
+//     const cart = await cartModel
+//       .findOne({ userId })
+//       .populate({ path: "cartProducts.productId", select: "Name Price image" });
+
+//     if (!cart || cart.cartProducts.length === 0) {
+//       return res.status(200).json({ msg: "Cart is empty", cartProducts: [] });
+//     }
+
+//     res.status(200).json({ msg: "Cart retrieved successfully", cartProducts: cart.cartProducts });
+//   } catch (error) {
+//     res.status(500).json({ msg: "Error from getCart", message: error.message });
+//   }
+// };
+
+// // ================== Delete Product from Cart ==================
+// // exports.deleteProduct = async (req, res) => {
+// //   try {
+// //     const userId = req.userId;
+// //     const productId = req.params.id;
+
+// //     if (!mongoose.Types.ObjectId.isValid(productId)) {
+// //       return res.status(400).json({ msg: "Invalid productId" });
+// //     }
+
+// //     const cart = await cartModel.findOne({ userId });
+
+// //     if (!cart) {
+// //       return res.status(404).json({ msg: "Cart not found" });
+// //     }
+
+// //     // Remove product from cartProducts array
+    
+// //     const index = cart.cartProducts.findIndex(
+// //   item => item.productId.toString() === productId.toString()
+// // );
+
+
+// //     if (index === -1) {
+// //       return res.status(404).json({ msg: "Product not found in cart" });
+// //     }
+
+// //     cart.cartProducts.splice(index, 1);
+// //     await cart.save();
+
+// //     res.status(200).json({ msg: "Product removed from cart", cart });
+// //   } catch (error) {
+// //     res.status(500).json({ msg: "Error from deleteProduct", message: error.message });
+// //   }
+// // };
+//    exports.deleteProduct = async (req, res) => {
 //   try {
 //     const userId = req.userId;
 //     const productId = req.params.id;
@@ -152,102 +186,207 @@ exports.getCart = async (req, res) => {
 //     }
 
 //     const cart = await cartModel.findOne({ userId });
+//     if (!cart) return res.status(404).json({ msg: "Cart not found" });
 
-//     if (!cart) {
-//       return res.status(404).json({ msg: "Cart not found" });
-//     }
-
-//     // Remove product from cartProducts array
-    
+//     // ✅ FIX HERE
 //     const index = cart.cartProducts.findIndex(
-//   item => item.productId.toString() === productId.toString()
-// );
+//       (item) => item.toString() === productId.toString()
+//     );
 
-
-//     if (index === -1) {
+//     if (index === -1)
 //       return res.status(404).json({ msg: "Product not found in cart" });
-//     }
 
 //     cart.cartProducts.splice(index, 1);
 //     await cart.save();
 
 //     res.status(200).json({ msg: "Product removed from cart", cart });
 //   } catch (error) {
-//     res.status(500).json({ msg: "Error from deleteProduct", message: error.message });
+//     res.status(500).json({
+//       msg: "Error from deleteProduct",
+//       message: error.message,
+//     });
 //   }
 // };
-   exports.deleteProduct = async (req, res) => {
+
+// // ================== Merge Cart ==================
+// exports.mergeCart = async (req, res) => {
+//   try {
+//     const userId = req.userId;
+//     console.log(userId)
+//     const productArray = req.body.productArray; // Array of productIds
+
+//     if (!Array.isArray(productArray) || productArray.length === 0) {
+//       return res.status(400).json({ msg: "Provide an array of productIds" });
+//     }
+
+//     // Convert all productIds to ObjectId and validate
+//     const validProductIds = productArray
+//       .filter(id => mongoose.Types.ObjectId.isValid(id))
+//       .map(id => new mongoose.Types.ObjectId(id));
+
+//     if (validProductIds.length === 0) {
+//       return res.status(400).json({ msg: "No valid productIds provided" });
+//     }
+
+//     let cart = await cartModel.findOne({ userId });
+
+//     if (!cart) {
+//       // If no cart, create new cart
+//       cart = new cartModel({
+//         userId,
+//         cartProducts: validProductIds
+//       });
+//       await cart.save();
+//     } else {
+//       // If cart exists, push only new products
+//       validProductIds.forEach(prodId => {
+//         if (!cart.cartProducts.some(item => item.toString() === prodId.toString())) {
+//           cart.cartProducts.push(prodId);
+//         }
+//       });
+//       await cart.save();
+//     }
+
+//     res.status(200).json({ msg: "Cart merged successfully", cart });
+//   } catch (error) {
+//     res.status(500).json({ msg: "Error from mergeCart", message: error.message });
+//   }
+// };
+
+
+
+const cartModel = require("../../model/cart");
+const mongoose = require("mongoose");
+
+// ================== ADD TO CART ==================
+exports.addToCart = async (req, res) => {
+  try {
+    const userId = req.userId;
+    console.log(userId);
+    const productId = req.params.id;
+   console.log(productId);
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      
+      return res.status(400).json({ msg: "Invalid productId" });
+    }
+
+    let cart = await cartModel.findOne({ userId });
+
+    // No cart -> create new
+    if (!cart) {
+      cart = new cartModel({
+        userId,
+        cartProducts: [{ productId, quantity: 1 }]
+      });
+      await cart.save();
+
+      return res.status(200).json({ msg: "Product added", cart });
+    }
+
+    // Cart exists -> find product
+    const index = cart.cartProducts.findIndex(
+      (item) => item.productId.toString() === productId.toString()
+    );
+
+    if (index !== -1) {
+      // Product already exists -> increase quantity
+      cart.cartProducts[index].quantity += 1;
+    } else {
+      // Add new item
+      cart.cartProducts.push({ productId, quantity: 1 });
+    }
+
+    await cart.save();
+
+    res.status(200).json({ msg: "Product added to cart", cart });
+  } catch (error) {
+    res.status(500).json({ msg: "Error from addToCart", message: error.message });
+  }
+};
+
+// ================== GET CART ==================
+exports.getCart = async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    const cart = await cartModel
+      .findOne({ userId })
+      .populate("cartProducts.productId", "Name Price image");
+
+    if (!cart || cart.cartProducts.length === 0) {
+      return res.status(200).json({ msg: "Cart empty", cartProducts: [] });
+    }
+
+    return res.status(200).json({
+      msg: "Cart retrieved",
+      cartProducts: cart.cartProducts
+    });
+  } catch (error) {
+    res.status(500).json({ msg: "Error from getCart", message: error.message });
+  }
+};
+
+// ================== DELETE PRODUCT ==================
+exports.deleteProduct = async (req, res) => {
   try {
     const userId = req.userId;
     const productId = req.params.id;
 
-    if (!mongoose.Types.ObjectId.isValid(productId)) {
-      return res.status(400).json({ msg: "Invalid productId" });
-    }
-
     const cart = await cartModel.findOne({ userId });
     if (!cart) return res.status(404).json({ msg: "Cart not found" });
 
-    // ✅ FIX HERE
     const index = cart.cartProducts.findIndex(
-      (item) => item.toString() === productId.toString()
+      (item) => item.productId.toString() === productId
     );
 
     if (index === -1)
-      return res.status(404).json({ msg: "Product not found in cart" });
+      return res.status(404).json({ msg: "Product not in cart" });
 
     cart.cartProducts.splice(index, 1);
     await cart.save();
 
-    res.status(200).json({ msg: "Product removed from cart", cart });
+    res.status(200).json({ msg: "Product removed", cart });
   } catch (error) {
-    res.status(500).json({
-      msg: "Error from deleteProduct",
-      message: error.message,
-    });
+    res.status(500).json({ msg: "Error from deleteProduct", message: error.message });
   }
 };
 
-// ================== Merge Cart ==================
+// ================== MERGE CART ==================
 exports.mergeCart = async (req, res) => {
   try {
     const userId = req.userId;
-    console.log(userId)
-    const productArray = req.body.productArray; // Array of productIds
+    const productArray = req.body.productArray; // array of productIds
 
     if (!Array.isArray(productArray) || productArray.length === 0) {
-      return res.status(400).json({ msg: "Provide an array of productIds" });
-    }
-
-    // Convert all productIds to ObjectId and validate
-    const validProductIds = productArray
-      .filter(id => mongoose.Types.ObjectId.isValid(id))
-      .map(id => new mongoose.Types.ObjectId(id));
-
-    if (validProductIds.length === 0) {
-      return res.status(400).json({ msg: "No valid productIds provided" });
+      return res.status(400).json({ msg: "Provide productId array" });
     }
 
     let cart = await cartModel.findOne({ userId });
 
     if (!cart) {
-      // If no cart, create new cart
       cart = new cartModel({
         userId,
-        cartProducts: validProductIds
+        cartProducts: productArray.map(id => ({
+          productId: id,
+          quantity: 1
+        }))
       });
       await cart.save();
-    } else {
-      // If cart exists, push only new products
-      validProductIds.forEach(prodId => {
-        if (!cart.cartProducts.some(item => item.toString() === prodId.toString())) {
-          cart.cartProducts.push(prodId);
-        }
-      });
-      await cart.save();
+      return res.status(200).json({ msg: "Cart merged", cart });
     }
 
-    res.status(200).json({ msg: "Cart merged successfully", cart });
+    // Cart exists
+    productArray.forEach((id) => {
+      const index = cart.cartProducts.findIndex(
+        (p) => p.productId.toString() === id
+      );
+      if (index === -1) {
+        cart.cartProducts.push({ productId: id, quantity: 1 });
+      }
+    });
+
+    await cart.save();
+    res.status(200).json({ msg: "Cart merged", cart });
   } catch (error) {
     res.status(500).json({ msg: "Error from mergeCart", message: error.message });
   }
