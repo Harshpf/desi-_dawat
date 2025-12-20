@@ -20,16 +20,19 @@ exports.getProductsByCategory = async (req, res) => {
     const { category, tag } = req.params;
     // console.log("Requested category:", category, "Tag:", tag);
 
+    let filter = {};
+
     // Build query dynamically
-    let filter = { Category: category };
+    if(category !=="null"){
+      filter.Category = category;  
+    }
     if (tag !== "null") {
       filter.Tag = tag;
     }
 
-    // Fetch products
+
     const products = await productModel.find(filter);
 
-    // Send back plain array (frontend expects this)
     return res.status(200).json(products);
 
   } catch (error) {
