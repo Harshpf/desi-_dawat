@@ -4,7 +4,7 @@ const {getProductsByCategory,getAllProducts,getProductById} = require("../../con
 
 router.get("/category/:category/:tag", getProductsByCategory);
 router.get("/allproducts",getAllProducts);
-// router.get("/:id",getProductById);
+router.get("/:id",getProductById);
 
 
 module.exports = router;

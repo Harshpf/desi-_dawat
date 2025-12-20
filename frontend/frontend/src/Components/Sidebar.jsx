@@ -31,7 +31,7 @@ export default function Sidebar({ onCategorySelect, defaultCategory = "all" }) {
     setActiveCategory(defaultCategory);
     onCategorySelect(defaultCategory);
   }, [defaultCategory, onCategorySelect]);
-
+                                                       
   const handleClick = (key) => {
     setActiveCategory(key);
     onCategorySelect(key);

@@ -4,7 +4,7 @@ const {addToCart,getCart,deleteProduct,mergeCart} = require("../../controller/us
 
 const router = express.Router();
 
-router.post("/addtocart/:id",validateUser,addToCart);
+router.post("/addtocart/:productId",validateUser,addToCart);
 router.get("/getcartproduct",validateUser,getCart);
 router.delete("/deletecartproduct/:id",validateUser,deleteProduct);
 router.post("/mergecart",validateUser,mergeCart);

@@ -22,13 +22,17 @@ export const getallproduct = ()=>
 API.get("/product/allproducts");
 
 
-export const addtocart = (productId, productData) => {
+export const getProductById = (id) => 
+  API.get(`/product/${id}`);
+
+
+
+export const addtocart = (productId, productData) => 
   
-  return API.post(`/cart/addtocart/${productId}`,productData, {
-    headers: { "Content-Type": "application/json" },
+   API.post(`/cart/addtocart/${productId}`,productData, {
     withCredentials: true,
   });
-};
+
 
 
 export const getCart = ()=>

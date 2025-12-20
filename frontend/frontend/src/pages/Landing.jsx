@@ -6,7 +6,7 @@ import  map from  '../assets/india.png'
 import  handmade from  '../assets/hand-made.png'
 import  delivery from  '../assets/free-delivery.png'
 import  preservatives from  '../assets/no-preservatives.png'
-// import  poster from  '../assets/poster.jpg'
+import  poster from  '../assets/poster.jpg'
 import card from '../assets/card.jpeg'
 import sweet from '../assets/sweet.jpeg'
 import snacks from '../assets/namkeen.jpeg'
@@ -19,32 +19,29 @@ import {  useNavigate } from 'react-router-dom'
 import {getbanner} from '../Components/Allapi'
 export const Landing = () => {
 
-  const[poster , setPoster] = useState(null);
+const [banners, setBanners] = useState([]);
 
+useEffect(() => {
+  const fetchPoster = async () => {
+    try {
+      const res = await getbanner();
 
-  useEffect ( () =>{
-    const fetchPoster = async() =>{
-      try{
-        const res = await getbanner();
-        
-          if (res.data.banners && res.data.banners.length > 0) {
-        let imagePath = res.data.banners[0].image;
+      if (res.data.banners) {
+        const allBanners = res.data.banners.map((b) => ({
+          ...b,
+          image: `http://localhost:5000/${b.image}` // full URL
+        }));
 
-        // Fix Windows backslashes
-        // imagePath = imagePath.replace(/\\/g, "/");
-
-        // Full URL (adjust if your backend is deployed)
-        const fullUrl = `http://localhost:5000/${imagePath}`;
-
-        setPoster(fullUrl);
+        setBanners(allBanners);
       }
+    } catch (err) {
+      console.log("Error fetching banners");
+    }
+  };
 
-      }catch(err){
-        console.log("error to fetch poster");
-      }
-    };
-    fetchPoster();
-  },[]);
+  fetchPoster();
+}, []);
+
 
   
 const cards = [
@@ -124,6 +121,17 @@ img: snacks},
     ],
   };
 
+  const bannerSettings = {
+  infinite: true,
+  speed: 800,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 3000,
+  dots: true
+};
+
+
     const navigate = useNavigate(); 
 
   
@@ -143,7 +151,58 @@ img: snacks},
   return (
     <div>    
    {/* IMAGE SECTION */}
-        <div className="home-container">
+
+   {/* IMAGE SECTION */}
+<div className="home-container">
+  <Slider {...bannerSettings}>
+    {banners.length > 0 ? (
+      banners.map((item, index) => (
+        <div 
+          key={index} 
+          className="banner-slide"
+          // onClick={() => {
+
+          //   if (item.tag) {
+          //     console.log(item.tag);
+          //     const normalized = item.tag.toLowerCase().replace(/\s+/g, "");
+          //     navigate('/allproduct', { state: { selectedCategory: normalized } });
+          //   }
+          // }}
+
+   onClick={() => {
+  if (item.tag) {
+                  console.log(item.tag);
+
+    const normalizedTag = item.tag.toLowerCase().replace(/\s+/g, "");
+
+    navigate("/allproduct", {
+      state: {
+        selectedCategory: null,
+        selectedTag: normalizedTag,
+      },
+    });
+  }
+}}
+
+          style={{ cursor: item.tag ? "pointer" : "default" }}
+        >
+          <img src={item.image} alt={`banner-${index}`} className="banner-img" />
+        </div>
+      ))
+    ) : (
+      <p>Loading banners...</p>
+    )}
+  </Slider>
+
+  <div className="content-container">
+    <h1>Excellent in Every Bite of our Sweets, Snacks And Treats</h1>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ullam quas.
+    </p>
+  </div>
+</div>
+
+        {/* <div className="home-container">
 
         {poster ? (
         <img src={poster} alt="poster" />
@@ -157,7 +216,7 @@ img: snacks},
 
           </div>
 
-        </div>
+        </div> */}
 
         {/* END */}
 

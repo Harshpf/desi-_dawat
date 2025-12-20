@@ -45,53 +45,61 @@ export const Specialpro = () => {
     setCartData(updated);
   };
 
-  // Handle Add to Cart
-  const handleAddToCart = async (index) => {
-    const product = products[index];
-    const { weight, qty } = cartData[index];
-    const unitPrice = product.price; // use numeric price
-    const total = unitPrice * qty;
 
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+const handleAddToCart = async (index) => {
+  const product = products[index];
+  if (!product) return;
 
-    const newItem = {
-      productId: product.id,
-      name: product.name,
-      key: product.id, // use backend id for unique key
-      image: product.img,
-      weight,
-      quantity: qty,
-      unitPrice:product.price,
-      total,
-    };
+  const { weight = "200g", qty = 1 } = cartData[index] || {};
+  const user = JSON.parse(localStorage.getItem("user"));
 
-    // Check if item exists
-    const existingIndex = cart.findIndex(
-      (item) => item.productId === newItem.productId && item.weight === weight
-    );
-
-    if (existingIndex >= 0) {
-      cart[existingIndex].quantity += qty;
-      cart[existingIndex].total =
-        cart[existingIndex].quantity * cart[existingIndex].unitPrice;
-    } else {
-      cart.push(newItem);
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    // POST API for Add Cart
-    try {
-      console.log("Sending productId:", product.id);
-      const res = await addtocart(product.id, newItem);
-      console.log(res.data);
-      console.log("Cart updated");
-    } catch (err) {
-      console.log("Error adding to cart", err);
-    }
-
-    navigate("/cart");
+  // ✅ STANDARD CART ITEM SHAPE
+  const cartItem = {
+    productId: product.id,      // ⭐ FIXED
+    name: product.name,
+    image: product.img,
+    price: product.price,
+    quantity: qty,
+    weight,
+    total: product.price * qty,
   };
+
+  /* ---------------- LOGGED IN USER ---------------- */
+  if (user) {
+    try {
+      await addtocart(product.id, {
+        quantity: qty,
+        weight,
+      });
+      navigate("/cart");
+      return;
+    } catch (err) {
+      console.error("Backend add failed:", err);
+    }
+  }
+
+  /* ---------------- GUEST USER ---------------- */
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const existingIndex = cart.findIndex(
+    (item) =>
+      item.productId === cartItem.productId &&
+      item.weight === weight
+  );
+
+  if (existingIndex >= 0) {
+    cart[existingIndex].quantity += qty;
+    cart[existingIndex].total =
+      cart[existingIndex].quantity * cart[existingIndex].price;
+  } else {
+    cart.push(cartItem);
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  navigate("/cart");
+};
+
+
 
   return (
     <div className="special-container">
@@ -102,8 +110,11 @@ export const Specialpro = () => {
           const itemPrice = item.price; // numeric price
 
           return (
-            <div className="specialcard" key={item.id}>
-              <img src={item.img} alt={item.name} />
+            <div className="specialcard" key={item.id}
+       >
+              <img src={item.img} alt={item.name} 
+                       onClick={() => navigate(`/product/${item.id}`)}
+  style={{ cursor: "pointer" }}/>
               <h3>{item.name}</h3>
               <p className="price">₹{itemPrice * qty}</p>
 

@@ -14,6 +14,7 @@ import Cart from './Components/Cart';
 import Checkout from './Components/Checkout';
 import OrderList from './Components/OrderList';
 import Profile from './Components/Profile'
+import SingleProduct from './Components/Singleproduct';
 
 
 
@@ -37,6 +38,8 @@ function App() {
         <Route path="/checkout" element={<Checkout/>} />
         <Route path="/orderlist" element={<OrderList/>} />
         <Route path="/profile" element={<Profile/>} />
+        <Route path="/product/:id" element={<SingleProduct />} />
+
 
         
       </Routes>

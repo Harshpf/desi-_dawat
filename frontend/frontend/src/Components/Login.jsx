@@ -54,6 +54,10 @@ export const Login = () => {
 
     if (res.status === 200) {
       localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+
+          window.dispatchEvent(new Event("userChanged"));
+
       setMsg(res.data.msg || "login successful");
       navigate('/');
     } else {

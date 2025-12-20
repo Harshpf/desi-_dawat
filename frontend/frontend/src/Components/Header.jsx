@@ -96,9 +96,17 @@ export const Header = () => {
     await Logout(); // call your API
 
     // Clear frontend storage
+     // keep guest local cart; clear auth & merge flag
+    const user = JSON.parse(localStorage.getItem("user"));
+    const mergeKey = user ? `cartMerged_${user._id}` : null;
+
     localStorage.removeItem("user");
-    localStorage.removeItem("cart");
     localStorage.removeItem("isLoggedIn");
+    if (mergeKey) localStorage.removeItem(mergeKey);
+
+    // notify
+    window.dispatchEvent(new Event("userChanged"));
+
 
     setMobileOpen(false)
     setShowPopup(false);

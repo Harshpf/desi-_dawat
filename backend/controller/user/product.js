@@ -18,7 +18,7 @@ const productModel = require("../../model/product")
 exports.getProductsByCategory = async (req, res) => {
   try {
     const { category, tag } = req.params;
-    console.log("Requested category:", category, "Tag:", tag);
+    // console.log("Requested category:", category, "Tag:", tag);
 
     // Build query dynamically
     let filter = { Category: category };

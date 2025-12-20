@@ -263,7 +263,7 @@ exports.addToCart = async (req, res) => {
   try {
     const userId = req.userId;
     console.log(userId);
-    const productId = req.params.id;
+    const productId = req.params.productId;
    console.log(productId);
     if (!mongoose.Types.ObjectId.isValid(productId)) {
       
@@ -356,6 +356,7 @@ exports.mergeCart = async (req, res) => {
   try {
     const userId = req.userId;
     const productArray = req.body.productArray; // array of productIds
+    
 
     if (!Array.isArray(productArray) || productArray.length === 0) {
       return res.status(400).json({ msg: "Provide productId array" });
@@ -378,7 +379,7 @@ exports.mergeCart = async (req, res) => {
     // Cart exists
     productArray.forEach((id) => {
       const index = cart.cartProducts.findIndex(
-        (p) => p.productId.toString() === id
+        (p) => p.productId.toString() === id.toString()
       );
       if (index === -1) {
         cart.cartProducts.push({ productId: id, quantity: 1 });
