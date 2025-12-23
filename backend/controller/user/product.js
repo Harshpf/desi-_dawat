@@ -22,7 +22,14 @@ exports.getProductsByCategory = async (req, res) => {
 
     let filter = {};
 
-    // Build query dynamically
+    if(category ==="null"){
+      filter.Tag = tag; 
+    }
+    else{
+   // category == NULL , tag   
+   // tag == NULL , category  - filter{category , NULL} 
+   //category and tag -{}
+
     if(category !=="null"){
       filter.Category = category;  
     }
@@ -31,8 +38,7 @@ exports.getProductsByCategory = async (req, res) => {
     }
 
     console.log(filter);
-
-
+  }
     const products = await productModel.find(filter);
 
     return res.status(200).json(products);
