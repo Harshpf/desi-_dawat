@@ -177,7 +177,7 @@ img: snacks},
 
     navigate("/allproduct", {
       state: {
-        selectedCategory: null,
+        selectedCategory: "all",
         selectedTag: normalizedTag,
       },
     });

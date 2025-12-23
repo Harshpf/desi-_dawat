@@ -26,13 +26,28 @@ export default function Allproduct() {
 
   
 
+// const [selectedCategory, setSelectedCategory] = useState(() => {
+//   return location.state?.selectedCategory || "all";
+// });
+
+// const [selectedTag, setSelectedTag] = useState(() => {
+//   return location.state?.selectedTag || null;
+// });
+
 const [selectedCategory, setSelectedCategory] = useState(() => {
-  return location.state?.selectedCategory || "all";
+  if (location.state && "selectedCategory" in location.state) {
+    return location.state.selectedCategory; // can be null
+  }
+  return localStorage.getItem("selectedCategory") || "all";
 });
 
 const [selectedTag, setSelectedTag] = useState(() => {
-  return location.state?.selectedTag || null;
+  if (location.state && "selectedTag" in location.state) {
+    return location.state.selectedTag;
+  }
+  return null;
 });
+
 
 
 
@@ -42,7 +57,8 @@ useEffect(() => {
       setLoading(true);
 
       // 🔹 CASE 1: TAG ONLY (from banner) → SHOW ALL TAG PRODUCTS
-      if (selectedCategory === null && selectedTag) {
+      if (selectedCategory === "all" && selectedTag) {
+     
         const res = await getProductByCategory("null", selectedTag);
 
         const grouped = res.data.reduce((acc, product) => {
@@ -65,7 +81,7 @@ useEffect(() => {
       }
 
       // 🔹 CASE 2: CATEGORY + TAG
-      if (selectedCategory !== "all" && selectedTag) {
+     else if (selectedCategory !== "all" && selectedTag) {
         const res = await getProductByCategory(
           selectedCategory.toLowerCase(),
           selectedTag
@@ -84,7 +100,7 @@ useEffect(() => {
       }
 
       // 🔹 CASE 3: ALL PRODUCTS (NORMAL FLOW)
-      if (selectedCategory === "all") {
+      else if (selectedCategory === "all") {
         const res = await getallproduct();
 
         const grouped = res.data.reduce((acc, product) => {

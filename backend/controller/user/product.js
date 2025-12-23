@@ -18,7 +18,7 @@ const productModel = require("../../model/product")
 exports.getProductsByCategory = async (req, res) => {
   try {
     const { category, tag } = req.params;
-    // console.log("Requested category:", category, "Tag:", tag);
+    console.log("Requested category:", category, "Tag:", tag);
 
     let filter = {};
 
@@ -29,6 +29,8 @@ exports.getProductsByCategory = async (req, res) => {
     if (tag !== "null") {
       filter.Tag = tag;
     }
+
+    console.log(filter);
 
 
     const products = await productModel.find(filter);
@@ -43,6 +45,7 @@ exports.getProductsByCategory = async (req, res) => {
 exports.getAllProducts = async (req, res) => {
     try {
         const products = await productModel.find();
+        console.log("fetching from all products");
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json({msg:"err from get all product", error: error.message });
