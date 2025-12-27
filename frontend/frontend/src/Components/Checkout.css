@@ -5,31 +5,36 @@
   margin-left: auto;
   margin-right: auto;
   padding: 20px;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial;
   color: #1f2937;
+  
 }
 
 .checkout-title {
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   font-size: 22px;
+  font-weight: 700;
 }
 
+/* ------------------- Layout ------------------- */
 .checkout-layout {
   display: grid;
-  grid-template-columns: 1fr 380px; /* Left = form, Right = saved addresses */
+  grid-template-columns: 1fr 380px;
   gap: 20px;
   align-items: start;
 }
 
 .checkout-card {
   background: #fff;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 16px;
   box-shadow: 0 8px 28px rgba(15, 23, 42, 0.05);
   margin-bottom: 12px;
 }
 
+/* ------------------- Form ------------------- */
 .checkout-form input,
 .checkout-form select {
   width: 100%;
@@ -41,15 +46,20 @@
   outline: none;
 }
 
-.checkout-form input:focus {
+.checkout-form input:focus,
+.checkout-form select:focus {
   border-color: #93c5fd;
   box-shadow: 0 6px 18px rgba(37, 99, 235, 0.06);
 }
 
+/* Inline row */
 .inline-row {
   display: flex;
   gap: 10px;
   align-items: center;
+}
+.inline-row label{
+  color: rgb(59, 55, 55);
 }
 
 .save-checkbox {
@@ -60,22 +70,24 @@
   font-size: 13px;
 }
 
+/* ------------------- Address List ------------------- */
 .address-list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .address-item {
   padding: 12px;
   border: 1px solid #eef2f7;
-  border-radius: 10px;
+  border-radius: 12px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 10px;
 }
 
 .address-item.selected {
@@ -83,9 +95,32 @@
   box-shadow: 0 8px 20px rgba(37, 99, 235, 0.06);
 }
 
+/* Radio + text fix */
+.address-item label {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+  flex: 1;
+}
+
+.address-list label{
+  color: rgb(71, 66, 66);
+}
+
+.address-item input[type="radio"] {
+  margin-top: 3px;
+}
+
+.address-item strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Address buttons */
 .address-actions {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
 }
 
@@ -94,18 +129,30 @@
   border: none;
   color: #2563eb;
   cursor: pointer;
-  padding: 6px 8px;
+  padding: 4px 8px;
   border-radius: 6px;
-  font-size: 13px;
+  font-size: 12px;
 }
 
-.link-btn.danger { color: #ef4444; }
+.link-btn:hover {
+  background: #eff6ff;
+}
 
+.link-btn.danger {
+  color: #ef4444;
+}
+
+.link-btn.danger:hover {
+  background: #fee2e2;
+}
+
+/* ------------------- Checkout Items ------------------- */
 .checkout-items {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
+
 
 .checkout-row {
   display: flex;
@@ -129,6 +176,7 @@
   font-size: 18px;
 }
 
+/* ------------------- Actions ------------------- */
 .checkout-actions {
   display: flex;
   gap: 8px;
@@ -144,11 +192,13 @@
   border-radius: 10px;
   cursor: pointer;
   font-weight: 600;
+  transition: 0.2s;
 }
 
-.primary-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(37, 99, 235, 0.12); }
-
-button { cursor: pointer; }
+.primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.12);
+}
 
 .place-order-btn {
   background: #10b981;
@@ -161,112 +211,100 @@ button { cursor: pointer; }
   font-weight: 700;
   font-size: 16px;
   cursor: pointer;
-  display: inline-block;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(16,185,129,0.12);
+  display: block;
+  margin: 20px auto 0;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.12);
+  transition: 0.2s;
 }
 
 .place-order-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(16,185,129,0.18);
+  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.18);
 }
 
+/* ------------------- Modal ------------------- */
 .modal-overlay {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: flex; align-items: center; justify-content: center;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-card {
   background: white;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 12px;
   text-align: center;
 }
 
 .btn-yes {
-  background: green; color: white;
-  margin: 5px; padding: 8px 16px;
+  background: #16a34a;
+  color: white;
+  margin: 6px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
 }
 
 .btn-no {
-  background: red; color: white;
-  margin: 5px; padding: 8px 16px;
+  background: #dc2626;
+  color: white;
+  margin: 6px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
 }
 
 .success-message {
-  color: green;
+  color: #16a34a;
+  font-weight: 600;
 }
-  .checkout-form input{
-    width: 80%;
-  }
 
 /* ------------------- Responsive ------------------- */
 
-/* Tablets ≤1024px */
+/* Tablets */
 @media (max-width: 1024px) {
   .checkout-layout {
-    grid-template-columns: 1fr; /* stack left/right */
-  }
-  .checkout-left, .checkout-right {
-    width: 100%;
-  }
-  .checkout-card {
-    padding: 14px;
+    grid-template-columns: 1fr;
   }
   .checkout-row img {
-    width: 50px;
-    height: 50px;
+    width: 52px;
+    height: 52px;
   }
   .grand-total {
     font-size: 16px;
   }
-  .place-order-btn {
-    width: 90%;
-  }
-  .checkout-form input{
-    width: 80%;
-  }
 }
 
-/* Mobile ≤600px */
+/* Mobile */
 @media (max-width: 600px) {
   .checkout-page {
     padding: 10px;
     margin-top: 6rem;
   }
+
   .checkout-row {
     flex-direction: column;
     align-items: flex-start;
-    gap: 6px;
   }
-  .checkout-row img {
-    width: 48px;
-    height: 48px;
-  }
+
   .inline-row {
     flex-direction: column;
-    gap: 6px;
+    align-items: flex-start;
   }
-  .save-checkbox {
-    margin-left: 0;
-  }
+
   .address-actions {
     flex-direction: column;
-    gap: 4px;
+    align-items: flex-start;
   }
-  .checkout-left, .checkout-right {
-    width: 100%;
-  }
-  .place-order-btn {
-    width: 100%;
-  }
+
   .grand-total {
     text-align: left;
   }
-  .checkout-form input{
-    width: 80%;
+
+  .place-order-btn {
+    width: 100%;
   }
 }

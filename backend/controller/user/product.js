@@ -30,15 +30,19 @@ exports.getProductsByCategory = async (req, res) => {
    // tag == NULL , category  - filter{category , NULL} 
    //category and tag -{}
 
-    if(category !=="null"){
-      filter.Category = category;  
-    }
-    if (tag !== "null") {
-      filter.Tag = tag;
-    }
+    // if(category !=="null"){
+    //   filter.Category = category;  
+    // }
+    // if (tag !== "null") {
+    //   filter.Tag = tag;
+    // }
+          filter.Category = category;  
+                filter.Tag = tag;
 
-    console.log(filter);
+
+   
   }
+   console.log(filter);
     const products = await productModel.find(filter);
 
     return res.status(200).json(products);

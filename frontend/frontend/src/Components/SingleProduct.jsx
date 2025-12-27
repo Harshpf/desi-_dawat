@@ -96,13 +96,19 @@ export default function SingleProduct() {
           <button onClick={() => setQty(qty + 1)}>+</button>
         </div>
 
-        <button className="add-btn" onClick={handleAdd}>
+        <div className="btn-group">
+  <button className="add-btn" onClick={handleAdd}>Add to Cart</button>
+  <button className="buy-btn" onClick={handleBuyNow}>Buy Now</button>
+</div>
+
+
+        {/* <button className="add-btn" onClick={handleAdd}>
           Add to Cart
         </button>
 
         <button className="buy-btn" onClick={handleBuyNow}>
           Buy Now
-        </button>
+        </button> */}
       </div>
     </div>
   );

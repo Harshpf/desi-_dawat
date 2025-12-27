@@ -102,6 +102,7 @@ export const Header = () => {
 
     localStorage.removeItem("user");
     localStorage.removeItem("isLoggedIn");
+
     if (mergeKey) localStorage.removeItem(mergeKey);
 
     // notify

@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from "react";
 import "./Checkout.css";
 import { getAddresses, addNewAddress, updateAddress, deleteAddress } from "./Allapi";
-import { createOrder } from "./Allapi";
+import { createOrder,getCart } from "./Allapi";
+const baseURL = "http://localhost:5000/";
 
 export default function Checkout() {
   const [cart, setCart] = useState([]);
@@ -27,10 +28,41 @@ export default function Checkout() {
   const [orderPlaced, setOrderPlaced] = useState(false);
 
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
-    setCart(storedCart);
+    // const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    // setCart(storedCart);
+    loadCart();
     loadAddresses();
   }, []);
+
+ const loadCart = async () => {
+  try {
+    const res = await getCart();
+    console.log("CART RESPONSE:", res.data);
+
+    const normalizedCart = res.data.cartProducts.map(item => {
+      const imgPath = item.productId.image?.[0]; // 👈 lowercase + array
+
+      return {
+        productId: item.productId._id,
+        name: item.productId.Name,
+        image: imgPath
+          ? `${baseURL}${imgPath.replace(/\\/g, "/")}` // 👈 fix slashes
+          : "",
+        weight: item.productId.Weight || "",
+        unitPrice: item.productId.Price,
+        quantity: item.quantity,
+        total: item.quantity * item.productId.Price
+      };
+    });
+
+    setCart(normalizedCart);
+  } catch (err) {
+    console.error("Error fetching cart:", err);
+  }
+};
+
+
+
 
   const loadAddresses = async () => {
     try {
@@ -209,7 +241,7 @@ const handlePlaceOrder = async () => {
     setShowConfirm(true);
     setOrderPlaced(true);
 
-    localStorage.removeItem("cart");
+    // localStorage.removeItem("cart");
     setCart([]);
   } catch (err) {
   console.error("Error placing order:", err);
@@ -283,7 +315,7 @@ const handlePlaceOrder = async () => {
                   <option>Other</option>
                 </select>
                 <label>
-                  <input type="checkbox" checked={tempAddress.saveAddress} onChange={(e) => setTempAddress({ ...tempAddress, saveAddress: e.target.checked })} />
+                  <input  type="checkbox" checked={tempAddress.saveAddress} onChange={(e) => setTempAddress({ ...tempAddress, saveAddress: e.target.checked })} />
                   Save this address
                 </label>
               </div>
@@ -304,8 +336,8 @@ const handlePlaceOrder = async () => {
                       <div>{addr.city} - {addr.pincode}</div>
                     </label>
                     <div className="address-actions">
-                      <button onClick={() => handleUseAndEdit(addr, idx)}>Use & Edit</button>
-                      <button className="danger" onClick={() => handleDeleteAddress(idx)}>Delete</button>
+                      <button  className="link-btn edit" onClick={() => handleUseAndEdit(addr, idx)}>Use & Edit</button>
+                      <button className="link-btn danger" onClick={() => handleDeleteAddress(idx)}>Delete</button>
                     </div>
                   </li>
                 ))}

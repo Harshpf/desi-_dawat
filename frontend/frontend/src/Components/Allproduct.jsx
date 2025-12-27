@@ -17,22 +17,6 @@ export default function Allproduct() {
   const [weights, setWeights] = useState({});
   const location = useLocation();
 
-  // const [selectedCategory, setSelectedCategory] = useState(() => {
-  //   if (location.state?.selectedCategory?.toLowerCase()) {
-  //     return location.state.selectedCategory;
-  //   }
-  //   return localStorage.getItem("selectedCategory") || "all";
-  // });
-
-  
-
-// const [selectedCategory, setSelectedCategory] = useState(() => {
-//   return location.state?.selectedCategory || "all";
-// });
-
-// const [selectedTag, setSelectedTag] = useState(() => {
-//   return location.state?.selectedTag || null;
-// });
 
 const [selectedCategory, setSelectedCategory] = useState(() => {
   if (location.state && "selectedCategory" in location.state) {
@@ -47,6 +31,7 @@ const [selectedTag, setSelectedTag] = useState(() => {
   }
   return null;
 });
+
 
 
 
@@ -150,93 +135,6 @@ useEffect(() => {
 
 
 
-  // Fetch products
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     try {
-  //       setLoading(true);
-
-  //       if (selectedCategory === "all") {
-  //         const res = await getallproduct();
-  //         const grouped = res.data.reduce((acc, product) => {
-  //           const key = product.Category.toLowerCase().replace(/\s+/g, "").trim();
-  //           if (!acc[key]) acc[key] = [];
-  //           acc[key].push({
-  //             key: product._id,
-  //             name: product.Name,
-  //             price: product.Price,
-  //             image:
-  //               product.image?.length > 0 ? `${baseURL}${product.image[0]}` : "",
-  //           });
-  //           return acc;
-  //         }, {});
-  //         setCategories(grouped);
-  //       } else {
-  //         const res = await getProductByCategory(  selectedCategory.toLowerCase(), "null");
-  //              const products = res.data;
-  //         setCategories({
-  //           [selectedCategory]: products.map((p) => ({
-  //             key: p._id,
-  //             name: p.Name,
-  //             price: p.Price,
-  //             image: p.image?.length > 0 ? `${baseURL}${p.image[0]}` : "",
-  //           })),
-  //         });
-  //       }
-  //     } catch (err) {
-  //       console.error("Error fetching products", err);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchProducts();
-  // }, [selectedCategory]);
-
-  // // Save selected category
-  // useEffect(() => {
-  //   localStorage.setItem("selectedCategory", selectedCategory);
-  // }, [selectedCategory]);
-
-  // Add to cart
-  // const handleAddToCart = async (product) => {
-  //   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-  //   const quantity = quantities[product.key] || 1;
-  //   const weight = weights[product.key] || "500g";
-
-  //   const newItem = {
-  //     ...product,
-  //     quantity,
-  //     weight,
-  //     unitPrice: product.price,
-  //     total: product.price * quantity,
-  //   };
-
-  //   const existingIndex = cart.findIndex(
-  //     (item) => item.key === product.key && item.weight === weight
-  //   );
-
-  //   if (existingIndex >= 0) {
-  //     cart[existingIndex].quantity += quantity;
-  //     cart[existingIndex].total =
-  //       cart[existingIndex].quantity * cart[existingIndex].unitPrice;
-  //   } else {
-  //     cart.push(newItem);
-  //   }
-
-  //   localStorage.setItem("cart", JSON.stringify(cart));
-
-  //   try {
-  //     await addtocart(product.key, newItem);
-  //     console.log("Cart updated");
-  //   } catch (err) {
-  //     console.log("Error adding to cart", err);
-  //   }
-
-  //   navigate("/cart");
-  // };
-
 
 const handleAddToCart = async (product) => {
   const user = JSON.parse(localStorage.getItem("user")); 
@@ -332,19 +230,24 @@ const handleAddToCart = async (product) => {
 
     return (
       <>
-        {/* <h2>
-          {selectedCategory === "all"
-            ? "All Products"
-            : selectedCategory.charAt(0).toUpperCase() +
-              selectedCategory.slice(1)}
-        </h2> */}
+       
 
-        <h2>
+        {/* <h2>
   {selectedCategory === null || selectedCategory === "all"
     ? "All Products"
     : selectedCategory.charAt(0).toUpperCase() +
       selectedCategory.slice(1)}
+</h2> */}
+
+<h2>
+  {selectedTag
+    ? "Festive Collection"
+    : selectedCategory === null || selectedCategory === "all"
+    ? "All Products"
+    : selectedCategory.charAt(0).toUpperCase() +
+      selectedCategory.slice(1)}
 </h2>
+
 
 
         <div className="products-grid">
