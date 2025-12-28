@@ -165,7 +165,7 @@
 const { orderUserModel, orderProductModel } = require("../../model/order");
 const addressModel = require("../../model/address");
 const Product = require("../../model/product");
-
+const cart = require("../../model/cart");
 
 
 // Create new order
@@ -206,7 +206,7 @@ exports.newOrder = async (req, res) => {
         name: product.Name,
         price: product.Price,
         quantity: item.quantity,
-        image: product.image?.[0] || "",  // ⭐ THIS MAKES IMAGE SHOW IN UI
+        image: product.image?.[0] || "",  
       });
     }
 
@@ -217,6 +217,10 @@ exports.newOrder = async (req, res) => {
       paymentStatus: "pending",
       orderStatus: "pending",
     });
+
+    const cartItems = await cart.findById(userId);
+    cartItems.cartProducts = [];
+    await cartItems.save();
 
     res.status(201).json({ message: "Order created" });
   } catch (err) {

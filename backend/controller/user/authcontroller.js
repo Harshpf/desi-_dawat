@@ -1,4 +1,5 @@
 const userModel = require("../../model/user")
+const userProfile = require("../../model/userprofile")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
@@ -50,6 +51,15 @@ exports.signup = async (req, res) => {
       Role: "user"
     });
 
+    //creating user profile 
+    const userProfileData = new userProfile({
+      name,
+      email,
+      gender : "male",
+      phoneNumber : 1234567890
+    });
+
+    await userProfileData.save();
     await newUser.save();
 
     return res.status(200).json({ msg: "Signup successful" });
@@ -100,7 +110,7 @@ exports.login = async (req, res) => {
   }
 };
 
-
+//logout 
 exports.logout = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
@@ -108,3 +118,24 @@ exports.logout = (req, res) => {
   });
   res.status(200).json({ msg: "Logout successful" });
 };
+
+
+//userProfile
+exports.userProfile = async(req,res) =>{
+  try{
+      const profile = await userProfile.findOneAndUpdate(
+        {},
+        {$set:req.body},
+        {new :true}
+      );
+
+      if(!profile){
+        return res.status(404).json({msg:"Profile not found"});
+      }
+
+      return res.status(200).json({msg:"Profile fetched successfully", profile});
+
+  }catch(err){
+    res.status(500).json({msg:"error from userProfile",message:err.message});
+  }
+}
