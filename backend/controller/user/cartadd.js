@@ -258,15 +258,14 @@
 const cartModel = require("../../model/cart");
 const mongoose = require("mongoose");
 
-// ================== ADD TO CART ==================
+
 exports.addToCart = async (req, res) => {
   try {
-    const userId = req.userId;
-    console.log(userId);
+    const userId = req.userId; 
     const productId = req.params.productId;
-   console.log(productId);
-    if (!mongoose.Types.ObjectId.isValid(productId)) {
-      
+    const {itemQuantity} = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(productId)) {  
       return res.status(400).json({ msg: "Invalid productId" });
     }
 
@@ -276,7 +275,7 @@ exports.addToCart = async (req, res) => {
     if (!cart) {
       cart = new cartModel({
         userId,
-        cartProducts: [{ productId, quantity: 1 }]
+        cartProducts: [{ productId, quantity: itemQuantity }]
       });
       await cart.save();
 
@@ -289,10 +288,8 @@ exports.addToCart = async (req, res) => {
     );
 
     if (index !== -1) {
-      // Product already exists -> increase quantity
-      cart.cartProducts[index].quantity += 1;
+      cart.cartProducts[index].quantity += itemQuantity;
     } else {
-      // Add new item
       cart.cartProducts.push({ productId, quantity: 1 });
     }
 

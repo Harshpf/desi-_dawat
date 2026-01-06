@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from 'react'
 // import  account from '../assets/user.png'
 import  logo from  '../assets/logo.jpeg'
-// import  cart from  '../assets/cart.png'
+import  cart from  '../assets/cart.png'
+import  spl1 from  '../assets/dryfruit_6.jpg'
+import  spl2 from  '../assets/gifting_6.jpg'
+import  story from  '../assets/gym_general_snack_4.jpg'
 import  map from  '../assets/india.png'
 import  handmade from  '../assets/hand-made.png'
 import  delivery from  '../assets/free-delivery.png'
 import  preservatives from  '../assets/no-preservatives.png'
-import  poster from  '../assets/poster.jpg'
+import  sugarfree from  '../assets/sugarfree.jpeg'
+import  festival from  '../assets/festival.jpeg'
 import card from '../assets/card.jpeg'
-import sweet from '../assets/sweet.jpeg'
-import snacks from '../assets/namkeen.jpeg'
-import thekua from '../assets/tekhua.jpeg'
+import dryfruit from '../assets/dry_fruits.jpg'
+import dryfruitsweet from '../assets/dry_fruit_sweets.jpg'
+import snacks from '../assets/snacks.jpg'
+import desibiscuits from '../assets/desi_biscuits.jpg'
+import gifting1 from '../assets/gifting_1.jpg'
+import gifting2 from '../assets/gifting_2.jpg'
+import gifting3 from '../assets/gifting_3.jpg'
+import gifting4 from '../assets/gifting_4.jpg'
 import './Landing.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -45,12 +54,12 @@ useEffect(() => {
 
   
 const cards = [
-  { id: 1, name: "Dry Fruits", key: "DryFruits", quantity: "22 Product", image: sweet },
+  { id: 1, name: "Dry Fruits", key: "DryFruits", quantity: "22 Product", image: dryfruit },
   { id: 2, name: "Snacks", key: "Snacks", quantity: "10 Product", image: snacks },
-  { id: 3, name: "Desi biscuits", key: "Desibiscuits", quantity: "15 Product", image: thekua },
-  { id: 4, name: "Dry Fruits Sweets", key: "DryFruitsSweets", quantity: "25Product", image: card },
-  { id: 5, name: "Sugarless Sweets", key: "SugarlessSweets", quantity: "30Product", image: card },
-  { id: 6, name: "Festival Sweets", key: "FestivalSweets", quantity: "10Product", image: card },
+  { id: 3, name: "Desi biscuits", key: "Desibiscuits", quantity: "15 Product", image: desibiscuits },
+  { id: 4, name: "Dry Fruits Sweets", key: "DryFruitsSweets", quantity: "25Product", image: dryfruitsweet },
+  { id: 5, name: "Sugarless Sweets", key: "SugarlessSweets", quantity: "30Product", image: sugarfree },
+  { id: 6, name: "Festival Sweets", key: "FestivalSweets", quantity: "10Product", image: festival },
 ];
 
 
@@ -292,19 +301,19 @@ img: snacks},
          <div className="giftcard-container">
 
            <div className="giftcard"   onClick={() => handleFirstClick("gifting")}>
-            <img src={card} alt="" />
+            <img src={gifting1} alt="" />
             <h3>Sweet Gifting</h3>
           </div>
           <div className="giftcard"   onClick={() => handleFirstClick("gifting")}>
-            <img src={card} alt="" />
+            <img src={gifting2} alt="" />
             <h3>Dry Fruit Gifting</h3>
           </div>
           <div className="giftcard"   onClick={() => handleFirstClick("gifting")}>
-            <img src={card} alt="" />
+            <img src={gifting3} alt="" />
             <h3>Classical Gifting</h3>
           </div>
           <div className="giftcard"  onClick={() => handleFirstClick("gifting")}>
-            <img src={card} alt="" />
+            <img src={gifting4} alt="" />
             <h3>Guilt Free Gifting</h3>
           </div>
 
@@ -328,8 +337,8 @@ img: snacks},
           </div>
 
           <div className="special-img"  onClick={handleSecondClick}>
-            <img src={card} alt="" />
-            <img src={card} alt="" />
+            <img src={spl1} alt="" />
+            <img src={spl2} alt="" />
           </div>
 
         </div>
@@ -343,12 +352,12 @@ img: snacks},
           <div className="story-img">
 
             <div className="img-up">
-              <img src={poster} alt="" />
+              <img src={story} alt="" />
             </div>
 
             <div className="img-down">
-              <img src={card} alt="" />
-              <img src={card} alt="" />
+              <img src={spl2} alt="" />
+              <img src={spl1} alt="" />
             </div>
 
           </div>
