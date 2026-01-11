@@ -2,6 +2,7 @@ const userModel = require("../../model/user")
 const userProfile = require("../../model/userprofile")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
+const sgMail = require("@sendgrid/mail");
 
 function sendTokenResponse(user, res){
     const token = jwt.sign({id: user._id}, process.env.JWT_SECRETE_KEY, {expiresIn: "1h"});
@@ -137,5 +138,38 @@ exports.userProfile = async(req,res) =>{
 
   }catch(err){
     res.status(500).json({msg:"error from userProfile",message:err.message});
+  }
+}
+
+//sending email with token for verification 
+exports.sendmail = async(req,res) =>{
+  try{
+
+    const{email} = req.body;
+
+    emailVerificationToken = jwt.sign({sub:email},process.env.EMAIL_VERIFICATION_SECRET,{ expiresIn: "5m" });
+
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+   const verificationLink = `http://localhost:5173//?verifyToken=${emailVerificationToken}`;
+
+    const msg = {
+    to: email,
+    from: "priyanshupandeyusa111@gmail.com", 
+    subject: "Verify your email",
+    html: `
+      <h2>Verify your email</h2>
+      <p>Click the link below to verify your email address:</p>
+      <a href="${verificationLink}">Verify Email</a>
+      <p>This link expires in 30 minutes.</p>
+    `,
+  };
+
+    await sgMail.send(msg);
+
+    return res.status(200).json("mail send");
+
+  }catch(err){
+    res.status(500).json({msg:"error from sendmail",message:err.message})
   }
 }
