@@ -10,3 +10,4 @@ router.delete("/delete/:id",deleteCategory);
 router.patch("/update/:id",updateCategory);
 
 module.exports = router;
+// git commit check
