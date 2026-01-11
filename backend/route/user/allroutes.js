@@ -8,12 +8,15 @@ const cart = require("./cart");
 const product = require("./product");
 const banners = require("./banners");
 const orders = require("./order");
+const category = require("./category");
+
 
 router.use("/address",address);
 router.use("/auth",auth);
 router.use("/cart",cart);
 router.use("/product",product);
 router.use("/banners",banners);
-router.use("/order",orders)
+router.use("/order",orders);
+router.use("/category",category);
 
 module.exports  = router 
